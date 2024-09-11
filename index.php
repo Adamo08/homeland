@@ -76,7 +76,7 @@
     <?php 
 
 
-        // Handle form submission
+        // Handle Sort form submission
         if (isset($_POST['sortBy'])) {
             $sortOrder = $_POST['sort'] ?? 'asc'; // Default to ascending if not set
 
@@ -94,41 +94,40 @@
 
     <div class="slide-one-item home-slider owl-carousel">
 
-    <?php foreach($some_properties as $prop): ?>
-      <?php 
-          $status = $prop['property_status'];
-          $bg = $bgs[$status][0];
-          $text = $bgs[$status][1];
-        
-      ?>    
-      <div class="site-blocks-cover overlay" style="background-image: url(assets/uploads/properties/images/<?=$prop['image']?>);" data-aos="fade" data-stellar-background-ratio="0.5">
-          <div class="container">
-              <div class="row align-items-center justify-content-center text-center">
-                  <div class="col-md-10">
-                    <span class="d-inline-block <?=$bg?> <?=$text?> px-3 mb-3 property-offer-type rounded">
-                      <?=$status?>
-                    </span>
-                    <h1 class="mb-2">
-                      <?=$prop['street_address']?>
-                    </h1>
-                    <p class="mb-5"><strong class="h2 text-success font-weight-bold">
-                      $<?=$prop['price']?>
-                    </strong></p>
-                    <p>
-                      <a 
-                        href="<?php echo URL("property-details.php?id=$prop[id]")?>" 
-                        class="btn btn-white btn-outline-white py-3 px-5 rounded-0 btn-2 text-decoration-none"
-                      >
-                        See Details
-                      </a>
-                    </p>
-                  </div>
-              </div>
-          </div>
-      </div> 
-    <?php endforeach;?>
+      <?php foreach($some_properties as $prop): ?>
+        <?php 
+            $status = $prop['property_status'];
+            $bg = $bgs[$status][0];
+            $text = $bgs[$status][1];
+          
+        ?>    
+        <div class="site-blocks-cover overlay" style="background-image: url(assets/uploads/properties/images/<?=$prop['image']?>);" data-aos="fade" data-stellar-background-ratio="0.5">
+            <div class="container">
+                <div class="row align-items-center justify-content-center text-center">
+                    <div class="col-md-10">
+                      <span class="d-inline-block <?=$bg?> <?=$text?> px-3 mb-3 property-offer-type rounded">
+                        <?=$status?>
+                      </span>
+                      <h1 class="mb-2">
+                        <?=$prop['street_address']?>
+                      </h1>
+                      <p class="mb-5"><strong class="h2 text-success font-weight-bold">
+                        $<?=$prop['price']?>
+                      </strong></p>
+                      <p>
+                        <a 
+                          href="<?php echo URL("property-details.php?id=$prop[id]")?>" 
+                          class="btn btn-white btn-outline-white py-3 px-5 rounded-0 btn-2 text-decoration-none"
+                        >
+                          See Details
+                        </a>
+                      </p>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      <?php endforeach;?>
       
-
     </div>
 
 
@@ -197,11 +196,12 @@
         <div class="row">
           <div class="col-md-12">
             <div class="view-options bg-white py-3 px-3 d-md-flex align-items-center">
+
               <div class="mr-auto">
                 <a href="index.php" class="icon-view view-module active text-decoration-none"><span class="icon-view_module"></span></a>
                 <a href="view-list.php" class="icon-view view-list text-decoration-none"><span class="icon-view_list"></span></a>
-                
               </div>
+
               <div class="ml-auto d-flex align-items-center">
                 <div>
                   <a href="index.php?view=all" class="view-list px-3 border-right active">All</a>
@@ -214,7 +214,7 @@
                 <form method="POST" action="">
                   <div class="d-flex"> 
                     <div class="select-wrap">
-                        <span class="icon icon-arrow_drop_down"></span>
+                        <!-- <span class="icon icon-arrow_drop_down"></span> -->
                         <select name="sort" class="form-control form-control-sm d-block rounded-0">
                             <option value="">Sort by</option>
                             <option value="asc" <?php if(@$_POST['sort'] === 'asc') echo 'selected'?>>Price Ascending</option>
