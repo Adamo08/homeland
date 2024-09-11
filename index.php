@@ -142,14 +142,14 @@
                           <span class="icon icon-arrow_drop_down"></span>
                           <select name="list-types" id="list-types" class="form-control d-block rounded-0">
                               <option value="">All</option>
-                              <option value="Condo" <?php if (@$_POST['list-types'] === 'Condo') echo 'selected'?>>Condo</option>
-                              <option value="Commercial Building" <?php if (@$_POST['list-types'] === 'Commercial Building') echo 'selected'?>>Commercial Building</option>
-                              <option value="House" <?php if (@$_POST['list-types'] === 'House') echo 'selected'?>>House</option>
-                              <option value="Property Land" <?php if (@$_POST['list-types'] === 'Property Land') echo 'selected'?>>Property Land</option>
-                              <option value="Office" <?php if (@$_POST['list-types'] === 'Office') echo 'selected'?>>Office</option>
-                              <option value="Apartment" <?php if (@$_POST['list-types'] === 'Apartment') echo 'selected'?>>Apartment</option>
-                              <option value="Retail" <?php if (@$_POST['list-types'] === 'Retail') echo 'selected'?>>Retail</option>
-                              <option value="Warehouse">Warehouse</option>
+                              <?php foreach($categories as $category):?>
+                                <option 
+                                    value="<?php echo htmlspecialchars($category['name']);?>" 
+                                    <?php if (@$_POST['list-types'] === $category['name']) echo 'selected'?>
+                                >
+                                  <?php echo $category['name'];?>
+                                </option>
+                              <?php endforeach?>
                           </select>
                       </div>
                   </div>
