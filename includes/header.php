@@ -81,8 +81,12 @@
                     <a href="properties.php">Properties</a>
                     <ul class="dropdown arrow-top">
                       <li><a href="#">Condo</a></li>
-                      <li><a href="#">Property Land</a></li>
                       <li><a href="#">Commercial Building</a></li>
+                      <li><a href="#">Property Land</a></li>
+                      <li><a href="#">Office</a></li>
+                      <li><a href="#">Apartment</a></li>
+                      <li><a href="#">Retail</a></li>
+                      <li><a href="#">Warehouse</a></li>
                     </ul>
                   </li>
                   <li><a href="<?php echo URL('about.php')?>">About</a></li>
