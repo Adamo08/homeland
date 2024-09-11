@@ -234,6 +234,31 @@
     }
 
 
+    /**
+     * Fetches all categories from the categories table.
+     *
+     * @return array An associative array of categories where each category is represented as an associative array.
+     */
+    function getAllCategories() {
+        global $pdo;
+
+        // Base query
+        $query = "SELECT * FROM categories";
+
+        // Prepare query
+        $stmt = $pdo->prepare($query);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch all results as an associative array
+        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Return the categories
+        return $categories;
+    }
+
+
 
 
 
