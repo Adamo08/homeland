@@ -121,5 +121,36 @@
 
 
 
+    /**
+     * A function that returns all the disponible cities (distinct) 
+     * @param none
+     * @return array
+     *  
+     */
+    function getAllCities() {
+        global $pdo;
+        try {
+            // Base query
+            $query = "SELECT DISTINCT city FROM properties";
+
+            // Preparing the query
+            $stmt = $pdo->prepare($query);
+
+            // Executing
+            $stmt->execute();
+
+            // Result 
+            $cities = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $cities;
+        }catch(PDOException $e){
+            // Handle the exception
+            echo "Error: " . $e->getMessage();
+            return [];
+        }
+    }
+
+
+
 
 ?>
