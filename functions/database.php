@@ -184,11 +184,6 @@
             $query .= " WHERE property_status = :offerType"; // Ensure this column name matches the database schema
         }
         
-        // Print the query for debugging
-        // echo "<pre>";
-        // echo "Query: $query\n";
-        // echo "Listing Type: $offerType\n";
-        // echo "</pre>";
 
         $stmt = $pdo->prepare($query);
 
