@@ -120,6 +120,93 @@
     }
 
 
+    /**
+     * 
+     * A function that searches the database based on the form inputs
+     * @param string $listingType
+     * @param string $offerType
+     * @param string $city
+     * 
+     * @return array 
+     */
+    function searchProperties($listingType, $offerType, $city) {
+        global $pdo;
+    
+        // Build the base query
+        $query = "SELECT * FROM properties WHERE 1=1";  // 1=1 makes appending conditions easier
+    
+        // Add conditions based on user input
+        if (!empty($listingType)) {
+            $query .= " AND property_type = :listingType";
+        }
+        if (!empty($offerType)) {
+            $query .= " AND property_status = :offerType";
+        }
+        if (!empty($city)) {
+            $query .= " AND city = :city";
+        }
+    
+        $stmt = $pdo->prepare($query);
+    
+        // Bind parameters if they are set
+        if (!empty($listingType)) {
+            $stmt->bindParam(':listingType', $listingType);
+        }
+        if (!empty($offerType)) {
+            $stmt->bindParam(':offerType', $offerType);
+        }
+        if (!empty($city)) {
+            $stmt->bindParam(':city', $city);
+        }
+    
+        // Execute the query
+        $stmt->execute();
+    
+        // Return the matching properties
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * Search properties based on the listing_type parameter only.
+     *
+     * @param string $listingType
+     * @return array
+    */ 
+    function searchPropertiesByofferType($offerType) {
+        global $pdo;
+        
+        // Build the base query
+        $query = "SELECT * FROM properties";  // 1=1 makes appending conditions easier
+
+        // Add condition based on offerType
+        if (!empty($offerType)) {
+            $query .= " WHERE property_status = :offerType"; // Ensure this column name matches the database schema
+        }
+        
+        // Print the query for debugging
+        // echo "<pre>";
+        // echo "Query: $query\n";
+        // echo "Listing Type: $offerType\n";
+        // echo "</pre>";
+
+        $stmt = $pdo->prepare($query);
+
+        // Bind parameter if it's set
+        if (!empty($offerType)) {
+            $stmt->bindParam(':offerType', $offerType);
+        }
+        
+        // Execute the query
+        $stmt->execute();
+        
+        // Return the matching properties
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    
+
+
 
     /**
      * A function that returns all the disponible cities (distinct) 
@@ -149,6 +236,28 @@
             return [];
         }
     }
+
+
+
+
+
+
+    /**
+     * Sorts an array of properties based on the specified field and order.
+     *
+     * @param array $properties The array of properties to sort.
+     * @param string $order The sorting order ('asc' for ascending, 'desc' for descending).
+     * 
+     * @return array The sorted array of properties.
+     */
+    // Function to sort properties by price
+    function sortProperties($properties, $order = 'asc') {
+        usort($properties, function($a, $b) use ($order) {
+            return $order === 'asc' ? $a['price'] <=> $b['price'] : $b['price'] <=> $a['price'];
+        });
+        return $properties;
+    }
+
 
 
 

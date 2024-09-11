@@ -8,6 +8,7 @@
 
     <?php require_once "../includes/header.php"?>
     <?php  require_once "../functions/database.php"?>
+    
 
     <?php 
     
@@ -34,7 +35,7 @@
                 // If the user exists
                 $_SESSION['user'] = $user;
                 // Redirect the user to the index.php page
-                header('Location: http://localhost/Homeland/');
+                echo "<script> window.location.href = 'http://localhost/Homeland/' </script>";
                 exit();
               }
               else{
