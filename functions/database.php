@@ -1,7 +1,6 @@
 <?php require_once "C:/xampp/htdocs/Homeland/config/config.php"?>
 <?php 
 
-
     /**
      * A function to get a user from the database 
      * @param string $username
