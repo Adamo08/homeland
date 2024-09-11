@@ -108,3 +108,26 @@ VALUES
     ('Stylish Apartment with Balcony', 'Chic apartment with a balcony and panoramic city views.', 179550, '123 Urban Ave', 'Unit 5B', 'Miami', 'FL', '33130',
     950, 189, 2, 1, 1, 88.26, 2021, 'Balcony, city view', 'Available', 'Apartment', 'For Sale', 'property5.jpg', 1);
 
+
+
+-- The categories table:
+CREATE TABLE IF NOT EXISTS categories(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    description TEXT,
+    property_count INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Insert sample data into the categories table
+INSERT INTO categories (name, description, property_count) 
+VALUES
+    ('Condo', 'Residential units, typically within multi-unit buildings.', 1),
+    ('Commercial Building', 'Buildings used for business activities.', 0),
+    ('Property Land', 'Vacant land available for development.', 1),
+    ('Office', 'Commercial spaces for office use.', 1),
+    ('Apartment', 'Individual residential units within a larger building.', 1),
+    ('Retail', 'Spaces used for retail businesses and shops.', 0),
+    ('Warehouse', 'Large buildings used for storage and distribution.', 0);
+
