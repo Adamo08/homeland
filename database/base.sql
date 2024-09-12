@@ -131,3 +131,34 @@ VALUES
     ('Retail', 'Spaces used for retail businesses and shops.', 0),
     ('Warehouse', 'Large buildings used for storage and distribution.', 0);
 
+
+-- The galleries table:
+CREATE TABLE IF NOT EXISTS galleries (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    property_id INT NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (property_id) REFERENCES properties(id)
+);
+
+-- Insert sample data to the galleries tabele:
+INSERT INTO galleries (property_id, image_url)
+VALUES
+    (1, 'property1_image1.jpg'),
+    (1, 'property1_image2.jpg'),
+    (1, 'property1_image3.jpg'),
+    (2, 'property2_image1.jpg'),
+    (2, 'property2_image2.jpg'),
+    (2, 'property2_image3.jpg'),
+    (3, 'property3_image1.jpg'),
+    (3, 'property3_image2.jpg'),
+    (3, 'property3_image3.jpg'),
+    (4, 'property4_image1.jpg'),
+    (4, 'property4_image2.jpg'),
+    (4, 'property4_image3.jpg'),
+    (5, 'property5_image1.jpg'),
+    (5, 'property5_image2.jpg'),
+    (5, 'property5_image3.jpg');
+
+
