@@ -200,6 +200,88 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    /**
+     * Retrieve properties by property type.
+     *
+     * @param string $propertyType The property type to filter by (e.g., 'Home', 'Condo').
+     * 
+     * @return array The list of properties matching the given property type.
+     */
+    function getPropertiesByType($propertyType) {
+        global $pdo;
+
+        // Prepare the SQL query
+        $query = "SELECT * FROM properties WHERE property_type = :propertyType";
+        
+        // Prepare the statement
+        $stmt = $pdo->prepare($query);
+        
+        // Bind the parameter
+        $stmt->bindParam(':propertyType', $propertyType, PDO::PARAM_STR);
+        
+        // Execute the query
+        $stmt->execute();
+        
+        // Fetch and return the results
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Retrieve a property by its ID.
+     *
+     * @param int $propertyID The ID of the property.
+     * 
+     * @return array|false The property details as an associative array if found, or false if not found.
+     */
+    function getPropertyByID($propertyID) {
+        global $pdo;
+
+        // Prepare the SQL query to select the property by ID
+        $query = "SELECT * FROM properties WHERE id = :propertyID";
+
+        // Prepare the statement
+        $stmt = $pdo->prepare($query);
+
+        // Bind the parameter
+        $stmt->bindParam(':propertyID', $propertyID, PDO::PARAM_INT);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch and return the property details as an associative array
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     *
+     * A function to get the associated gallery to a property 
+     * @param int $propertyID
+     *  @return array|false
+     * 
+     */
+    function getPropertyGallery($propertyID) {
+        global $pdo;
+
+        // Prepare the SQL query to select the property by ID
+        $query = "SELECT * FROM galleries WHERE property_id = :propertyID";
+
+         // Prepare the statement
+        $stmt = $pdo->prepare($query);
+
+        // Bind the parameter
+        $stmt->bindParam(':propertyID', $propertyID, PDO::PARAM_INT);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch and return the property details as an associative array
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+
+
     
 
 
