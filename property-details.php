@@ -1,12 +1,48 @@
 <?php require_once "includes/header.php"?>
+<?php require_once "functions/database.php"?>
 
-    <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(assets/images/hero_bg_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+    <?php 
+
+      if (isset($_GET['id'])){
+
+        $propertyID = $_GET['id'];
+        // Getting the property by ID
+        $property = getPropertyByID($propertyID);
+
+        // echo "<pre>";
+        // print_r($property);
+        // echo "</pre>";
+
+        // Getting the gallery
+        $galleries = getPropertyGallery($propertyID);
+
+        // Slice the galleries
+        $galleriesSliced = array_slice($galleries, 0, 3);
+
+        // echo "<pre>";
+        // print_r($galleries);
+        // echo "</pre>";
+
+      }
+      else{
+        // Redirect To home page
+        echo "<script> window.location.href = 'http://localhost/Homeland/' </script>";
+        exit();
+      }
+    
+    ?>
+
+    <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(assets/uploads/properties/images/<?=$property['image']?>);" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center justify-content-center text-center">
           <div class="col-md-10">
             <span class="d-inline-block text-white px-3 mb-3 property-offer-type rounded">Property Details of</span>
-            <h1 class="mb-2">625 S. Berendo St</h1>
-            <p class="mb-5"><strong class="h2 text-success font-weight-bold">$1,000,500</strong></p>
+            <h1 class="mb-2">
+              <?=$property['street_address']?>
+            </h1>
+            <p class="mb-5"><strong class="h2 text-success font-weight-bold">
+              $<?=$property['price']?>
+            </strong></p>
           </div>
         </div>
       </div>
@@ -18,31 +54,39 @@
           <div class="col-lg-8">
             <div>
               <div class="slide-one-item home-slider owl-carousel">
-                <div><img src="assets/images/hero_bg_1.jpg" alt="Image" class="img-fluid"></div>
-                <div><img src="assets/images/hero_bg_2.jpg" alt="Image" class="img-fluid"></div>
-                <div><img src="assets/images/hero_bg_3.jpg" alt="Image" class="img-fluid"></div>
+                <?php foreach($galleriesSliced as $gallery): ?>
+                  <div><img src="<?php echo URL("assets/uploads/properties/galleries/" . htmlspecialchars($gallery['image_url'])); ?>" alt="Image" class="img-fluid"></div>
+                <?php endforeach; ?>
               </div>
             </div>
             <div class="bg-white property-body border-bottom border-left border-right">
               <div class="row mb-5">
                 <div class="col-md-6">
-                  <strong class="text-success h1 mb-3">$1,000,500</strong>
+                  <strong class="text-success h1 mb-3">
+                    $<?=$property['price']?>
+                  </strong>
                 </div>
                 <div class="col-md-6">
                   <ul class="property-specs-wrap mb-3 mb-lg-0  float-lg-right">
                   <li>
                     <span class="property-specs">Beds</span>
-                    <span class="property-specs-number">2 <sup>+</sup></span>
+                    <span class="property-specs-number">
+                      <?=$property['bedrooms']?> <sup>+</sup>
+                    </span>
                     
                   </li>
                   <li>
                     <span class="property-specs">Baths</span>
-                    <span class="property-specs-number">2</span>
+                    <span class="property-specs-number">
+                      <?=$property['bathrooms']?>
+                    </span>
                     
                   </li>
                   <li>
                     <span class="property-specs">SQ FT</span>
-                    <span class="property-specs-number">7,000</span>
+                    <span class="property-specs-number">
+                      <?=$property['size_sqft']?> m<sup>2</sup>
+                    </span>
                     
                   </li>
                 </ul>
@@ -51,62 +95,47 @@
               <div class="row mb-5">
                 <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
                   <span class="d-inline-block text-black mb-0 caption-text">Home Type</span>
-                  <strong class="d-block">Condo</strong>
+                  <strong class="d-block">
+                    <?=$property['property_type']?>
+                  </strong>
                 </div>
                 <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
                   <span class="d-inline-block text-black mb-0 caption-text">Year Built</span>
-                  <strong class="d-block">2018</strong>
+                  <strong class="d-block">
+                    <?=$property['year_built']?>
+                  </strong>
                 </div>
                 <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
                   <span class="d-inline-block text-black mb-0 caption-text">Price/Sqft</span>
-                  <strong class="d-block">$520</strong>
+                  <strong class="d-block">
+                    $<?=$property['price_sqft']?>
+                  </strong>
                 </div>
               </div>
-              <h2 class="h4 text-black">More Info</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aperiam perferendis deleniti vitae asperiores accusamus tempora facilis sapiente, quas! Quos asperiores alias fugiat sunt tempora molestias quo deserunt similique sequi.</p>
-              <p>Nisi voluptatum error ipsum repudiandae, autem deleniti, velit dolorem enim quaerat rerum incidunt sed, qui ducimus! Tempora architecto non, eligendi vitae dolorem laudantium dolore blanditiis assumenda in eos hic unde.</p>
-              <p>Voluptatum debitis cupiditate vero tempora error fugit aspernatur sint veniam laboriosam eaque eum, et hic odio quibusdam molestias corporis dicta! Beatae id magni, laudantium nulla iure ea sunt aliquam. A.</p>
 
+              <h2 class="h4 text-black">More Info</h2>
+              <ul>
+                <li>
+                  <?=$property['description']?>
+                </li>
+                <li>
+                  <?=$property['features']?>
+                </li>
+              </ul>
+              
               <div class="row no-gutters mt-5">
                 <div class="col-12">
                   <h2 class="h4 text-black mb-3">Gallery</h2>
                 </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_1.jpg" class="image-popup gal-item"><img src="assets/images/img_1.jpg" alt="Image" class="img-fluid"></a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_2.jpg" class="image-popup gal-item"><img src="assets/images/img_2.jpg" alt="Image" class="img-fluid"></a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_3.jpg" class="image-popup gal-item"><img src="assets/images/img_3.jpg" alt="Image" class="img-fluid"></a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_4.jpg" class="image-popup gal-item"><img src="assets/images/img_4.jpg" alt="Image" class="img-fluid"></a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_5.jpg" class="image-popup gal-item"><img src="assets/images/img_5.jpg" alt="Image" class="img-fluid"></a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_6.jpg" class="image-popup gal-item"><img src="assets/images/img_6.jpg" alt="Image" class="img-fluid"></a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_7.jpg" class="image-popup gal-item"><img src="assets/images/img_7.jpg" alt="Image" class="img-fluid"></a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_8.jpg" class="image-popup gal-item"><img src="assets/images/img_8.jpg" alt="Image" class="img-fluid"></a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_1.jpg" class="image-popup gal-item"><img src="assets/images/img_1.jpg" alt="Image" class="img-fluid"></a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_2.jpg" class="image-popup gal-item"><img src="assets/images/img_2.jpg" alt="Image" class="img-fluid"></a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_3.jpg" class="image-popup gal-item"><img src="assets/images/img_3.jpg" alt="Image" class="img-fluid"></a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <a href="assets/images/img_4.jpg" class="image-popup gal-item"><img src="assets/images/img_4.jpg" alt="Image" class="img-fluid"></a>
-                </div>
+                <?php foreach($galleries as $gallery): ?>
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <a href="<?php echo URL("assets/uploads/properties/galleries/" . htmlspecialchars($gallery['image_url'])); ?>" class="image-popup gal-item">
+                            <img src="<?php echo URL("assets/uploads/properties/galleries/" . htmlspecialchars($gallery['image_url'])); ?>" alt="Image" class="img-fluid img-thumbnail h-100">
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+
+
               </div>
             </div>
           </div>
