@@ -91,11 +91,11 @@
                     <li><a href="<?php echo URL('buy.php')?>">Buy</a></li>
                     <li><a href="<?php echo URL('rent.php')?>">Rent</a></li>
                     <li class="has-children">
-                      <a href="properties.php">Properties</a>
+                      <a href="#">Properties</a>
                       <ul class="dropdown arrow-top">
                         <?php foreach($categories as $category): ?>
                           <li>
-                            <a href="<?php echo URL("category.php?id=".$category['id'])?>">
+                            <a href="<?php echo URL("categories/category.php?type=".htmlspecialchars($category['name']))?>">
                               <?php echo htmlspecialchars($category['name']); ?>
                             </a>
                           </li>
