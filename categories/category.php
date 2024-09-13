@@ -5,7 +5,7 @@
         if (isset($_GET['type'])){
 
 
-            $propertyType = $_GET['type'];
+            $propertyType = $_GET['type'] ?? '';
             // Getting all the properties belonging to propertyType
             $properties = getPropertiesByType($propertyType);
 
@@ -42,7 +42,7 @@
         }
         else{
             // Redirect To home page
-            echo "<script> window.location.href = 'http://localhost/Homeland/' </script>";
+            echo "<script> window.location.href = '".URL('404.php')."' </script>";
             exit();
         }
     
@@ -207,7 +207,7 @@
                     <img src="../assets/uploads/properties/images/<?=$prop['image']?>" alt="Image" class="img-fluid">
                     </a>
                     <div class="p-4 property-body">
-                    <a href="#" class="property-favorite text-decoration-none"><span class="icon-heart-o"></span></a>
+                    <!-- <a href="#" class="property-favorite text-decoration-none"><span class="icon-heart-o"></span></a> -->
                     <h2 class="property-title">
                         <a href="<?php echo URL("property-details.php?id=$prop[id]")?>"
                         >
