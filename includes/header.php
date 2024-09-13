@@ -112,14 +112,17 @@
                       <li class="has-children">
                         <img src="<?php echo URL('assets/uploads/' . $avatar); ?>" alt="Avatar" class="avatar-img">
                         <ul class="dropdown arrow-top">
-                          <li class="pl-3 pt-3">
+                          <li class="pl-3 py-3">
                             Welcome 
                             <span class="username-span">
                               <?=$_SESSION['user']['username']?>
                             </span>
                           </li>
-                          <li><a href="<?php echo URL('profile.php')?>">Profile</a></li>
-                          <li><a href="<?php echo URL('auth/logout.php')?>">Logout</a></li>
+                          <li><a href="<?php echo URL('user/profile.php')?>">Profile</a></li>
+                          <li><a href="<?php echo URL('user/settings.php')?>">Settings</a></li>
+                          <li><a href="<?php echo URL('user/favorites.php')?>">Favorites</a></li>
+                          <li><a href="<?php echo URL('user/requests.php')?>">Requests</a></li>
+                          <li class="username-span"><a href="<?php echo URL('auth/logout.php')?>">Logout</a></li>
                         </ul>
                       </li>
                     <?php endif;?>
