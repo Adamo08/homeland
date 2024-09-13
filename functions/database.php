@@ -281,6 +281,226 @@
     }
 
 
+    /**
+     * Fetch related properties based on property type OR state.
+     *
+     * @param string $propertyType The type of the current property (e.g., 'Home', 'Condo').
+     * @param string $state The state of the current property.
+     * @param int $excludePropertyId The ID of the current property to exclude it from results.
+     * @param int $limit The number of related properties to fetch (optional).
+     * @return array An array of related properties.
+     */
+    function getRelatedProperties( string $propertyType, string $state, int $excludePropertyId, int $limit = 4): array {
+        
+        global $pdo;
+
+        // Fetch related properties with the same property type 
+        // OR state, 
+        // Excluding the current property
+
+        $query = "SELECT * FROM properties 
+                        WHERE (property_type = :propertyType OR state = :state) 
+                        AND id != :excludePropertyId 
+                        LIMIT :limit
+                ";
+        
+        // Preparing the query
+        $stmt = $pdo->prepare($query);
+
+        // Binding parameters
+        $stmt->bindParam(':propertyType', $propertyType, PDO::PARAM_STR);
+        $stmt->bindParam(':state', $state, PDO::PARAM_STR);
+        $stmt->bindParam(':excludePropertyId', $excludePropertyId, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Return the result as an array of related properties
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * A function to add a property to favorites
+     * @param int $userId
+     * @param int $propertyId
+     * 
+     * @return bool
+     */
+    function addToFavorites($userId, $propertyId) {
+        global $pdo; // Use the global $pdo from config.php
+        $sql = "INSERT INTO favorites (user_id, property_id) VALUES (:user_id, :property_id)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':property_id', $propertyId, PDO::PARAM_INT);
+        
+        return $stmt->execute();
+    }
+
+    /**
+     * A function that removes a property from favorites
+     * @param int $userId
+     * @param int $propertyId
+     * 
+     * @return bool
+     */
+    function removeFromFavorites($userId, $propertyId) {
+        global $pdo;
+        
+        // Base query
+        $sql = "DELETE FROM favorites WHERE user_id = :user_id AND property_id = :property_id";
+        
+        // Preparing the query
+        $stmt = $pdo->prepare($sql);
+
+        // Binding Params
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':property_id', $propertyId, PDO::PARAM_INT);
+
+        // Executing
+        return $stmt->execute();
+    }
+
+
+    /**
+     * A function that checks if a property is in the favorites
+     * 
+     * @param int $userId
+     * @param int $propertyId
+     * 
+     * @return bool
+     * 
+     */ 
+    function inFavorites($userId, $propertyId) {
+        global $pdo; 
+
+        // Base query
+        $sql = "SELECT COUNT(*) FROM favorites WHERE user_id = :user_id AND property_id = :property_id";
+        
+        // Preparing
+        $stmt = $pdo->prepare($sql);
+
+        // Binding parameters
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':property_id', $propertyId, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        // Check if the count is greater than 0
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+
+
+    /**
+     * 
+     * A function that returns the list of favorites 
+     * @param int $userId
+     * @return array
+     * 
+     */
+    function getFavorites($userId){
+        global $pdo;
+
+        // Base query
+        $query = "SELECT f.property_id, f.created_at, p.title, p.street_address, p.status 
+                    FROM favorites f
+                    INNER JOIN properties p
+                    ON
+                        f.property_id = p.id
+                    WHERE
+                        f.user_id = :user_id
+                    ORDER BY p.id ASC
+        ";
+
+        // Preparing the base query
+        $stmt = $pdo -> prepare($query);
+
+        // Binding params
+        $stmt -> bindParam(":user_id", $userId, PDO::PARAM_INT);
+
+        // Executing
+        $stmt -> execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     *
+     * A function to add a new request for a property 
+     * @param string $name
+     * @param string $email
+     * @param string $phone
+     * @param int $userId
+     * @param int $propertyId
+     * 
+     * @return bool
+     * 
+     */
+    function insertRequest($name,$email,$phone,$userId,$propertyId){
+        global $pdo;
+
+        // Base query
+        $query = "INSERT INTO requests(name,email,phone,user_id,property_id)
+                    VALUES 
+                        (
+                            :name,
+                            :email,
+                            :phone,
+                            :user_id,
+                            :property_id
+                        )
+        ";
+
+        // Preparing the base query
+        $stmt = $pdo -> prepare($query);
+
+        // Binding params
+        $stmt -> bindParam(":name",$name,PDO::PARAM_STR);
+        $stmt -> bindParam(":email",$email,PDO::PARAM_STR);
+        $stmt -> bindParam(":phone",$phone,PDO::PARAM_STR);
+        $stmt -> bindParam(":user_id",$userId,PDO::PARAM_INT);
+        $stmt -> bindParam(":property_id",$propertyId,PDO::PARAM_INT);
+
+        if ($stmt->execute()){
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * A function that checks if a property is in the favorites
+     * 
+     * @param int $userId
+     * @param int $propertyId
+     * 
+     * @return bool
+     * 
+     */ 
+    function inRequests($userId, $propertyId) {
+        global $pdo; 
+
+        // Base query
+        $sql = "SELECT COUNT(*) FROM requests WHERE user_id = :user_id AND property_id = :property_id";
+        
+        // Preparing
+        $stmt = $pdo->prepare($sql);
+
+        // Binding parameters
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':property_id', $propertyId, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        // Check if the count is greater than 0
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+
+
+
 
     
 
