@@ -270,7 +270,7 @@
                       <img src="assets/uploads/properties/images/<?=$prop['image']?>" alt="Image" class="img-fluid">
                     </a>
                     <div class="p-4 property-body">
-                      <a href="#" class="property-favorite text-decoration-none"><span class="icon-heart-o"></span></a>
+                      <!-- <a href="#" class="property-favorite text-decoration-none"><span class="icon-heart-o"></span></a> -->
                       <h2 class="property-title">
                         <a href="<?php echo URL("property-details.php?id=$prop[id]")?>"
                         >
