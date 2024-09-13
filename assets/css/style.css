@@ -583,20 +583,56 @@ a:hover {
 
 
 .avatar-img {
-  width: 40px; /* Adjust the width as needed */
-  height: 40px; /* Adjust the height as needed */
-  border-radius: 50%; /* Make it circular */
-  object-fit: cover; /* Ensure the image covers the area without distortion */
-  margin-right: 8px; /* Add space between the image and text */
+  width: 40px; 
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
 }
-/* In your assets/css/style.css or appropriate CSS file */
+
 .username-span {
-  font-weight: bold; /* Makes the text bold */
-  color: #007bff; /* Adjust color to your preference */
-  font-size: 16px; /* Adjust font size as needed */
-  padding: 0 5px; /* Add padding around the text */
-  border-radius: 3px; /* Optional: Add rounded corners */
-  background-color: #f8f9fa; /* Optional: Add background color */
+  font-weight: bold; 
+  color: #007bff;
+  font-size: 16px; 
+  padding: 0 5px; 
+  border-radius: 3px; 
+  background-color: #f8f9fa;
+}
+
+/* Available */
+.status-available {
+  background-color: #28a745; /* Green */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Sold */
+.status-sold {
+  background-color: #dc3545; /* Red */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Pending */
+.status-pending {
+  background-color: #ffc107; /* Yellow */
+  color: black;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .status-available,
+  .status-sold,
+  .status-pending {
+      font-size: 12px;
+      padding: 4px 8px;
+  }
 }
 
 
