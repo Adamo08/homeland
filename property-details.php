@@ -457,7 +457,7 @@
           $(document).ready(function() {
               $('#add-to-favorites').on('click', function() {
                   var $form = $('#favorite-form');
-                  console.table($form.serialize());
+                  // console.table($form.serialize());
                   $.ajax({
                       url: $form.attr('action'),
                       method: 'POST',
