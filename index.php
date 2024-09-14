@@ -256,7 +256,7 @@
                   $text = $bgs[$status][1];
                 ?>
 
-                <div class="col-md-6 col-lg-4 mb-4">
+                <div class="col-md-6 col-lg-4 mb-4"  data-aos="fade-up" data-aos-delay="100">
                   <div class="property-entry h-100">
                     <a 
                       href="<?php echo URL("property-details.php?id=$prop[id]")?>" 
