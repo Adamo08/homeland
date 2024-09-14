@@ -21,11 +21,12 @@
         return $user;
     }
 
+
     /**
      * A function to get a user from db 
      * @param string $email
      * @param string $passord
-     * @return mixed
+     * @return array
      */
     function getUserByEmailAndPassword($email, $password) {
         global $pdo;
@@ -34,8 +35,7 @@
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $password);
         $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $user;
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -80,6 +80,127 @@
             return false; // Indicate failure
         }
     }
+
+    /**
+     * A function to get a user details (additional info)
+     * @param int $userId
+     * @return array
+     * 
+     */
+    function getUserDetail($userId){
+        
+        global $pdo;
+        
+        // Base query
+        $sql = "SELECT * FROM user_details WHERE user_id = :user_id";
+
+        // Preparing
+        $stmt = $pdo->prepare($sql);
+
+        // Binding
+        $stmt -> bindParam(":user_id", $userId, PDO::PARAM_INT);
+        
+        // Executing
+        $stmt -> execute();
+
+        return $stmt -> fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * 
+     * A function that updates the user Info 
+     * @param int $userId
+     * @param string $full_name
+     * @param string $username
+     * @param string $email
+     * @param string $phone
+     * @param string $address
+     * @param string $job
+     * 
+     * @return bool
+     */
+    function updateUser($userId, $full_name, $username, $email, $phone, $address,$job){
+        global $pdo;
+
+        // Base query
+        $sql = "UPDATE users u
+                JOIN user_details ud ON
+                        u.id = ud.user_id
+                SET
+                    u.full_name = :full_name,
+                    u.username = :username,
+                    u.email = :email,
+                    u.phone = :phone,
+                    u.address = :address,
+                    ud.job = :job
+                WHERE
+                    u.id = :user_id
+        ";
+
+        // Preparing
+        $stmt = $pdo -> prepare($sql);
+
+        // Binding
+        $stmt -> bindParam(':full_name',$full_name,PDO::PARAM_STR);
+        $stmt -> bindParam(':username',$username,PDO::PARAM_STR);
+        $stmt -> bindParam(':email',$email,PDO::PARAM_STR);
+        $stmt -> bindParam(':phone',$phone,PDO::PARAM_STR);
+        $stmt -> bindParam(':address',$address,PDO::PARAM_STR);
+        $stmt -> bindParam(':job',$job,PDO::PARAM_STR);
+        $stmt -> bindParam(':user_id',$userId,PDO::PARAM_INT);
+
+
+        // Executing and return
+        return $stmt -> execute();
+    }
+
+    /**
+     * A function to update a social link 
+     * 
+     * @param int $userId
+     * @param string $social
+     * @param string $newUrl
+     * 
+     * @return bool
+     */
+
+    function updateSocialLink($userId, $social, $newUrl) {
+        global $pdo;
+    
+        $sql = "UPDATE user_details 
+                SET {$social} = :new_url 
+                WHERE user_id = :user_id";
+    
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':new_url', $newUrl, PDO::PARAM_STR);
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    
+        return $stmt->execute();
+    }
+
+
+    /**
+     * A function to update a social link 
+     * 
+     * @param int $userId
+     * @param string $social
+     * 
+     * @return bool
+     */
+
+    function removeSocialLink($userId, $social) {
+        global $pdo;
+    
+        $sql = "UPDATE user_details 
+                SET {$social} = NULL 
+                WHERE user_id = :user_id";
+    
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    
+        return $stmt->execute();
+    }
+    
 
 
     /**
@@ -470,6 +591,39 @@
         return false;
     }
 
+    /**
+     * 
+     * A function that returns the list of requests 
+     * @param int $userId
+     * @return array
+     * 
+     */
+    function getRequests($userId){
+        global $pdo;
+
+        // Base query
+        $query = "SELECT r.property_id, r.created_at, p.title, p.street_address, p.status 
+                    FROM requests r
+                    INNER JOIN properties p
+                    ON
+                        r.property_id = p.id
+                    WHERE
+                        r.user_id = :user_id
+                    ORDER BY p.id ASC
+        ";
+
+        // Preparing the base query
+        $stmt = $pdo -> prepare($query);
+
+        // Binding params
+        $stmt -> bindParam(":user_id", $userId, PDO::PARAM_INT);
+
+        // Executing
+        $stmt -> execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     /**
      * A function that checks if a property is in the favorites
@@ -538,14 +692,18 @@
 
     /**
      * Fetches all categories from the categories table.
-     *
+     * @param bool $isActive
      * @return array An associative array of categories where each category is represented as an associative array.
      */
-    function getAllCategories() {
+    function getAllCategories($isActive = false) {
         global $pdo;
 
         // Base query
-        $query = "SELECT * FROM categories";
+        $query = "SELECT * FROM categories WHERE 1=1";
+
+        if ($isActive){
+            $query .= " AND property_count != 0";
+        }
 
         // Prepare query
         $stmt = $pdo->prepare($query);
