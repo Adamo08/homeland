@@ -1,18 +1,16 @@
-<?php 
-
-    if (!isset($_SESSION['user'])){
-        echo "<script> window.location.href = '".URL()."'</script>";
-        exit();
-    }
-
-?>
-
 
 <?php 
 
     require_once "../functions/database.php";
     require_once "../functions/helpers.php";
     require_once "../config/config.php";
+
+
+    if (!isset($_SESSION['user'])){
+        echo "<script> window.location.href = '".URL()."'</script>";
+        exit();
+    }
+
 
     if (isset($_POST['submit'])) {
         // Sanitize input
