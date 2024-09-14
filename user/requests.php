@@ -1,4 +1,5 @@
 <?php require_once "../includes/header.php"?>
+<?php require_once "../functions/database.php"?>
 
 <?php 
 
@@ -8,6 +9,139 @@
     }
 
 ?>
+
+
+<?php 
+    
+        $isLoggedIn = false;
+        if (isset($_SESSION['user'])) {
+            $userId = $_SESSION['user']['id'];
+            $isLoggedIn = true;
+
+            // Let's get The List of requests For the current user
+            $requests = getRequests($userId);
+        }
+
+    
+?>
+
+
+<div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(../assets/images/hero_bg_1.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row align-items-center justify-content-center text-center">
+            <div class="col-md-10">
+            <h1 class="mb-2">User/requests</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    table tbody td {
+        vertical-align: middle !important;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="my-5">List Of Requests</h2>
+            <?php if($isLoggedIn): ?>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover mt-4">
+                        <thead>
+                            <tr>
+                                <th width="10%"></th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Street Address</th>
+                                <th>Property Status</th>
+                                <th>Date Requested</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (!empty($requests)): ?>
+
+                                <?php foreach ($requests as $request): ?>
+                                    <?php 
+                                        $status = $request['status'];
+                                        $className = '';
+                                        switch($status){
+                                            case 'Available':
+                                                $className = 'status-available';
+                                                break;
+                                            case 'Sold':
+                                                $className = 'status-sold';
+                                                break;
+                                            case 'Pending':
+                                                $className = 'status-pending';
+                                                break;
+                                        }
+                                        
+                                    ?>
+                                    <tr id="row-<?= $request['property_id']; ?>">
+                                        <td>
+                                            <img 
+                                                width="60" 
+                                                height="60" 
+                                                src="https://via.placeholder.com/100" 
+                                                alt="Property Image" class="img-fluid">
+                                        </td>
+                                        <td>
+                                            <?=$request['property_id']?>
+                                        </td>
+                                        <td>
+                                            <?=$request['title']?>
+                                        </td>
+                                        <td>
+                                            <?=$request['street_address']?>
+                                        </td>
+                                        <td>
+                                            <span class="<?=$className?>">
+                                                <?=$status?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <?=$request['created_at']?>
+                                        </td>
+                                        <td>
+                                            <a 
+                                                href="#" 
+                                                class="text-danger delete-btn text-decoration-none"
+                                                data-id="<?=$request['property_id']?>"
+                                            >
+                                                <i class="icon-close"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+
+                            <?php else:?>
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="alert alert-info alert-dismissible fade show">
+                                            Your List Of Requests Is Empty!
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endif;?>
+
+                        </tbody>
+                    </table>
+                </div>
+            <?php else:?>
+                <div class="alert alert-info alert-dismissible fade show mt-2">
+                    You must be <a href="<?=URL("auth/login.php")?>">Logged In</a> to see the list of your requests
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                </div>
+            <?php endif;?>
+
+        </div>
+    </div>
+</div>
 
 
 
