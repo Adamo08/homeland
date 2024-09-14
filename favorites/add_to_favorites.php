@@ -1,15 +1,13 @@
-<?php 
-
-    if (!isset($_SESSION['user'])){
-        echo "<script> window.location.href = '".URL()."'</script>";
-        exit();
-    }
-
-?>
-
-
 <?php
         require_once '../functions/database.php';
+        require_once '../functions/helpers.php';
+
+        session_start();
+
+        if (!isset($_SESSION['user'])){
+            echo "<script> window.location.href = '".URL()."'</script>";
+            exit();
+        }
 
         // Check if data is posted
         if (isset($_POST['property_id']) && isset($_POST['user_id'])) {
