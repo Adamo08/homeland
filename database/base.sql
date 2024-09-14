@@ -190,5 +190,32 @@ CREATE TABLE IF NOT EXISTS requests (
 );
 
 
+-- The user_details table:
+CREATE TABLE IF NOT EXISTS user_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    job VARCHAR(100) DEFAULT NULL,
+    facebook VARCHAR(100) DEFAULT NULL UNIQUE,
+    instagram VARCHAR(100) DEFAULT NULL UNIQUE,
+    twitter VARCHAR(100) DEFAULT NULL UNIQUE,
+    github VARCHAR(100) DEFAULT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Inserting random data
+
+INSERT INTO user_details (user_id, job, facebook, instagram, twitter, github)
+VALUES 
+    (1, 'Software Engineer', 'facebook.com/adamo', 'instagram.com/adamo', 'twitter.com/adamo', 'github.com/adamo'),
+    (2, 'Software Developer', 'facebook.com/johndoe', 'instagram.com/johndoe', 'twitter.com/johndoe', 'github.com/johndoe'),
+    (3, 'Marketing Specialist', 'facebook.com/janesmith', 'instagram.com/janesmith', 'twitter.com/janesmith', 'github.com/janesmith'),
+    (4, 'Graphic Designer', 'facebook.com/robertbrown', 'instagram.com/robertbrown', 'twitter.com/robertbrown', 'github.com/robertbrown'),
+    (5, 'Content Writer', 'facebook.com/emilydavis', 'instagram.com/emilydavis', 'twitter.com/emilydavis', 'github.com/emilydavis'),
+    (6, 'Data Analyst', 'facebook.com/mamado', 'instagram.com/mamado', 'twitter.com/mamado', 'github.com/mamado');
+
+
+
 
 
