@@ -23,7 +23,7 @@
     <?php 
     
       // Getting all the categories
-      $categories = getAllcategories();
+      $categories = getAllcategories(true);
     
     ?>
 
