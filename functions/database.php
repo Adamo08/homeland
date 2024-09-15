@@ -23,6 +23,21 @@
 
 
     /**
+     * A function to get a user from the database 
+     * 
+     * @return array
+     */
+    function getUsers() {
+        global $pdo;
+        $query = "SELECT * FROM users";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+
+    /**
      * A function to get a user from db 
      * @param string $email
      * @param string $passord
@@ -30,10 +45,80 @@
      */
     function getUserByEmailAndPassword($email, $password) {
         global $pdo;
-        $query = "SELECT * FROM users WHERE (email = :email OR username= :email) AND password = :password";
+        $query = "SELECT * FROM users WHERE (email = :email) AND password = :password";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $password);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * A function to get an admin from db 
+     * @param int $id
+     * 
+     * @return array
+     */
+    function getAdmins() {
+        global $pdo;
+
+        // Base query
+        $query = "SELECT * FROM admins";
+        
+        // Preparing
+        $stmt = $pdo->prepare($query);
+
+
+        // Executing
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * A function to get an admin from db 
+     * @param int $id
+     * 
+     * @return array
+     */
+    function getAdmin($id) {
+        global $pdo;
+
+        // Base query
+        $query = "SELECT * FROM admins WHERE id = :id";
+        
+        // Preparing
+        $stmt = $pdo->prepare($query);
+
+        // Binding
+        $stmt->bindParam(':id', $id);
+
+        // Executing
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * A function to get an admin from db 
+     * @param string $email
+     * @param string $passord
+     * @return array
+     */
+    function getAdminByEmailAndPassword($email, $password) {
+        global $pdo;
+
+        // Base query
+        $query = "SELECT * FROM admins WHERE (email = :email OR username= :email) AND password = :password";
+        
+        // Preparing
+        $stmt = $pdo->prepare($query);
+
+        // Binding
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $password);
+
+        // Executing
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -199,6 +284,34 @@
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
     
         return $stmt->execute();
+    }
+
+    /**
+     * A functions that returns the number of rows in a given table
+     * 
+     * @param string $table
+     * @return mixed
+     */
+
+    function getRowCout($table){
+        global $pdo;
+
+        try {    
+            // Base query
+            $sql = "SELECT COUNT(*) FROM $table";
+
+            // Preparing
+            $stmt = $pdo -> prepare($sql);
+            
+            // Executing
+            $stmt -> execute();
+            
+            return $stmt -> fetchColumn();
+        } 
+        catch(PDOException $e){
+            echo "Error: ".$e->getMessage();
+            return false;
+        }
     }
     
 
