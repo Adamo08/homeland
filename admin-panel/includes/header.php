@@ -1,4 +1,22 @@
 <?php require_once "C:/xampp/htdocs/Homeland/admin-panel/helpers/helpers.php"?>
+<?php require_once "C:/xampp/htdocs/Homeland/functions/database.php"?>
+<?php require_once "C:/xampp/htdocs/Homeland/functions/file_helpers.php"?>
+
+
+<?php 
+
+    session_start();
+    if (!isset($_SESSION['admin_id'])){
+        // Go to login
+        echo "<script> window.location.href = '".ADMINAUTH."login.php' </script>";
+    }else{
+        // Getting the admin
+        $id = isset($_SESSION['admin_id']);
+        $admin = getAdmin($id);
+    }
+
+
+?>
 
 
 <!DOCTYPE html>
@@ -29,12 +47,18 @@
             
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img   
+                            src="<?php echo ADMINASSETS."images/".$admin['image']?>"
+                            width="40"
+                            height="40"
+                            alt="Admin Avatar"
+                        >
+                    </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><a class="dropdown-item" href="">Settings</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                        <li><a class="dropdown-item" href="<?php echo ADMINAUTH?>logout.php">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -119,8 +143,8 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small mb-2">Logged in as:</div>
-                        <span class="bg-primary text-white font-weight-bold px-3 rounded-2">
-                        Admin
+                        <span class="bg-primary text-white font-weight-bold px-2 rounded-2">
+                            <?=$admin['username']?>
                         </span>
                     </div>
                 </nav>
