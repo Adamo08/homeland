@@ -9,6 +9,10 @@
         define('ADMINAUTH',ADMINURL.'auth/');
     }
 
+    if (!defined('ADMINASSETS')){
+        define('ADMINASSETS',ADMINURL.'assets/');
+    }
+
 
     /**
      * Returns the full URL for the admin panel concatenated with the passed argument.
