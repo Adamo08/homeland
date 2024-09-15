@@ -130,54 +130,6 @@
         </div>
     </main>
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-
-        const ctx_1 = document.getElementById('myLineChart');
-        const ctx_2 = document.getElementById('myBarChart');
-
-        new Chart(ctx_1, {
-            type: 'line',
-            data: {
-                labels: ["Jan","Feb","Mar","Apr","Mai","Jui","Jul","Aug","Sep","Oct","Nov","Dec"],
-                datasets: [{
-                label: 'Users',
-                data: [12,23,30,100,250,200,260,180,154,99,120,150],
-                borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                y: {
-                    beginAtZero: true
-                }
-                }
-            }
-        });
-
-        new Chart(ctx_2, {
-            type: 'bar',
-            data: {
-                labels: ['Condo', 'Property Land', 'Commercial Building', 'House', 'Apartment', 'Office', 'Retail', 'Warehouse'],
-                datasets: [{
-                label: 'Properties',
-                data: [3,6,12,7,8,22,8,10],
-                backgroundColor: [
-                    '#7FDBFF', '#FF6F61', '#77DD77', '#B19CD9', '#FFDAB9', '#F5FF', '#B0E0E6', '#D3D3D3'
-                ],
-                borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                y: {
-                    beginAtZero: true
-                }
-                }
-            }
-        });
-    </script> -->
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Fetch data for the line chart (Users per month)
