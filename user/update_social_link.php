@@ -19,7 +19,7 @@
         $newUrl = isset($_POST['new_url']) ? trim($_POST['new_url']) : '';
 
         if ($userId > 0 && !empty($social) && !empty($newUrl)) {
-            // Assuming you have a function to update social links
+
             $updateSuccess = updateSocialLink($userId, $social, $newUrl);
             
             if ($updateSuccess) {
