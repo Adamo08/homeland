@@ -18,8 +18,9 @@
         <div class="container-fluid px-4">
 
             <h1 class="mt-4">Users</h1>
-            <ol class="breadcrumb mb-4">
+            <ol class="breadcrumb mb-4 d-flex justify-content-between align-items-center">
                 <li class="breadcrumb-item active">Users</li>
+                <a href="add-user.php" class="btn btn-primary">Add New</a>
             </ol>
             <div class="container">
                 <table id="datatablesSimple" class="display">
@@ -55,8 +56,7 @@
                 </table>
             </div>
 
-            <a href="add-user.php" class="btn btn-primary my-3">Add New User</a>
-
+            
         </div>
     </main>
 
