@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS properties (
     year_built YEAR,
     features TEXT,
     status ENUM('Available', 'Sold', 'Pending') DEFAULT 'Available',
-    property_type ENUM('Condo', 'Property Land', 'Commercial Building', 'House', 'Apartment', 'Office', 'Retail', 'Warehouse') NOT NULL,
+    property_type VARCHAR(255) NOT NULL UNIQUE,
     property_status ENUM('For Rent', 'For Sale', 'For Lease', 'For Rent or Sale', 'For Rent or Lease', 'For Sale or Lease', 'For Rent, Sale, or Lease') NOT NULL,
     image VARCHAR(255),
     admin_id INT,
@@ -87,6 +87,19 @@ CREATE TABLE IF NOT EXISTS properties (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (admin_id) REFERENCES admins(id)
 );
+
+-- Property types : 
+    -- 'Condo', 
+    -- 'Property Land', 
+    -- 'Commercial Building', 
+    -- 'House', 
+    -- 'Apartment', 
+    -- 'Office', 
+    -- 'Retail', 
+    -- 'Warehouse'
+    -- ...
+
+
 
 
 -- Insert sample data into properties
