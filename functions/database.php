@@ -45,7 +45,7 @@
      */
     function getUserByEmailAndPassword($email, $password) {
         global $pdo;
-        $query = "SELECT * FROM users WHERE (email = :email) AND password = :password";
+        $query = "SELECT * FROM users WHERE (email = :email OR username = :email) AND password = :password";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $password);
@@ -109,7 +109,7 @@
         global $pdo;
 
         // Base query
-        $query = "SELECT * FROM admins WHERE (email = :email OR username= :email) AND password = :password";
+        $query = "SELECT * FROM admins WHERE (email = :email) AND password = :password";
         
         // Preparing
         $stmt = $pdo->prepare($query);
@@ -829,6 +829,37 @@
 
         // Return the categories
         return $categories;
+    }
+
+    /**
+     * A function to update a category
+     * @param int $id
+     * @param string $name
+     * @param string $description
+     * 
+     * @return bool
+     */
+    function updateCategory($id, $name, $description){
+        global $pdo;
+
+        // Base query
+        $sql = "UPDATE categories
+                SET
+                    name = :name,
+                    description = :description
+
+                WHERE
+                    id = :id
+        ";
+        // Preparing
+        $stmt = $pdo -> prepare($sql);
+
+        // Binding
+        $stmt -> bindParam(":name",$name,PDO::PARAM_STR);
+        $stmt -> bindParam(":description",$description,PDO::PARAM_STR);
+        $stmt -> bindParam("id",$id,PDO::PARAM_INT);
+
+        return $stmt->execute();
     }
 
 
