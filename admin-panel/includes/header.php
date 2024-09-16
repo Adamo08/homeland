@@ -22,6 +22,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -31,6 +32,9 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="<?php echo ADMINURL?>assets/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="<?php echo URL('../assets/fonts/icomoon/style.css')?>">
+        <link rel="stylesheet" href="<?php echo URL('../assets/css/bootstrap.min.css')?>">
+
     </head>
     <body class="sb-nav-fixed">
         
@@ -88,6 +92,7 @@
                             <div class="collapse" id="collapseAdmins" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="<?php echo ADMINURL?>admins/admins-list.php">List of admins</a>
+                                    <a class="nav-link" href="<?php echo ADMINURL?>admins/add-admin.php">Add New Admin</a>
                                 </nav>
                             </div>
 
@@ -99,7 +104,7 @@
                             <div class="collapse" id="collapseUsers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="<?php echo ADMINURL?>users/users-list.php">List of Users</a>
-                                    <a class="nav-link" href="<?php echo ADMINURL?>users/add-user.php">Add new User</a>
+                                    <a class="nav-link" href="<?php echo ADMINURL?>users/add-user.php">Add New User</a>
                                 </nav>
                             </div>
 
@@ -111,7 +116,7 @@
                             <div class="collapse" id="collapseCategories" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="<?php echo ADMINURL?>categories/categories-list.php">List of Categories</a>
-                                    <a class="nav-link" href="<?php echo ADMINURL?>categories/add-category.php">Add new Category</a>
+                                    <a class="nav-link" href="<?php echo ADMINURL?>categories/add-category.php">Add New Category</a>
                                 </nav>
                             </div>
 
@@ -124,7 +129,7 @@
                             <div class="collapse" id="collapseProperties" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="<?php echo ADMINURL?>properties/properties-list.php">List of Properties</a>
-                                    <a class="nav-link" href="<?php echo ADMINURL?>properties/add-property.php">Add new Property</a>
+                                    <a class="nav-link" href="<?php echo ADMINURL?>properties/add-property.php">Add New Property</a>
                                 </nav>
                             </div>
 
