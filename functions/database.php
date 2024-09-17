@@ -862,6 +862,27 @@
         return $stmt->execute();
     }
 
+    /**
+     * A function that's takes an id as parameter and deletes the category with the passed id
+     * @param int $id
+     * @return bool
+     * 
+     */
+    function deleteCategory($id){
+        global $pdo;
+
+        // Base Query
+        $sql = "DELETE FROM categories WHERE id = :id";
+
+        // Preparing & Binding
+        $stmt = $pdo -> prepare($sql);
+        $stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+
+
+
+        return $stmt -> execute();
+    }
+
 
 
 
