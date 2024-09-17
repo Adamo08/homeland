@@ -7,76 +7,74 @@
         echo "<script> window.location.href = '".ADMINAUTH."' </script>";
     }
 
-    // Getting the list of admins
+    // Getting the list of categories
     $categories = getAllCategories();
-    $i = 0;
+
 
 ?>
 
 
-<main>
-        <div class="container-fluid px-4">
+    <main>
+            <div class="container-fluid px-4">
 
-            <h1 class="mt-4">Categories</h1>
-            <ol class="breadcrumb mb-4 d-flex justify-content-between align-items-center">
-                <li class="breadcrumb-item active">Categories</li>
-                <a href="add-category.php" class="btn btn-primary">Add New</a>
-            </ol>
-            <div class="container">
-                <table id="datatablesSimple" class="display">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Property Count</th>
-                            <th>Added At</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <h1 class="mt-4">Categories</h1>
+                <ol class="breadcrumb mb-4 d-flex justify-content-between align-items-center">
+                    <li class="breadcrumb-item active">Categories</li>
+                    <a href="add-category.php" class="btn btn-primary">Add New</a>
+                </ol>
+                <div class="container">
+                    <table id="datatablesSimple" class="display">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Property Count</th>
+                                <th>Added At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        <?php if(!empty($categories)):?>
-                            <?php foreach($categories as $category):?>
-                                <tr>
-                                    <td><?=++$i?></td>
-                                    <td><?=$category['name']?></td>
-                                    <td><?=$category['description']?></td>
-                                    <td><?=$category['property_count']?></td>
-                                    <td><?=$category['created_at']?></td>
-                                    <td>
-                                        <a 
-                                            href="#" 
-                                            data-toggle="tooltip" 
-                                            data-placement="top" 
-                                            title="Delete"
-                                            class="delete-category ml-2"
-                                            data-id="<?=$category['id']?>"
-                                        >
-                                            <i class="icon-trash text-danger"></i>
-                                        </a>
-                                        <a 
-                                            href="#" 
-                                            data-toggle="tooltip" 
-                                            data-placement="top" 
-                                            title="Update"
-                                            class="edit-category ml-2"
-                                            data-id="<?=$category['id']?>"
-                                            data-category="<?=$category['name']?>"
-                                            data-description="<?=$category['description']?>"
-                                        >
-                                            <i class="icon-edit text-info"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            <?php endforeach;?>
-                        <?php endif;?>
-                        
+                            <?php if(!empty($categories)):?>
+                                <?php foreach($categories as $category):?>
+                                    <tr>
+                                        <td><?=$category['name']?></td>
+                                        <td><?=$category['description']?></td>
+                                        <td><?=$category['property_count']?></td>
+                                        <td><?=$category['created_at']?></td>
+                                        <td>
+                                            <a 
+                                                href="#" 
+                                                data-toggle="tooltip" 
+                                                data-placement="top" 
+                                                title="Delete"
+                                                class="delete-category ml-2"
+                                                data-id="<?=$category['id']?>"
+                                            >
+                                                <i class="icon-trash text-danger"></i>
+                                            </a>
+                                            <a 
+                                                href="#" 
+                                                data-toggle="tooltip" 
+                                                data-placement="top" 
+                                                title="Update"
+                                                class="edit-category ml-2"
+                                                data-id="<?=$category['id']?>"
+                                                data-category="<?=$category['name']?>"
+                                                data-description="<?=$category['description']?>"
+                                            >
+                                                <i class="icon-edit text-info"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach;?>
+                            <?php endif;?>
+                            
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
     </main>
 
 
@@ -243,9 +241,45 @@
 
             // Delete Category
             $(document).on('click','.delete-category',function () {
-                alert(`Deleting category with id: `+ $(this).data('id'));
+                // alert(`Deleting category with id: `+ $(this).data('id'));
+                var id = $(this).data('id');
+                var row = $(this).closest('tr');
+                if (confirm("Are you sure you want to delete this category? All the related properties will be deleted also!")){
+                    $.ajax({
+                        url: 'delete_category.php',
+                        method: 'POST',
+                        data: {
+                            category_id: id
+                        },
+
+                        // Success
+                        success: function(response){
+                            if(response.status === 'success'){
+
+                                alert(response.message);
+                                console.log('Success:', response.message);
+
+                                // Deleting the corresponding row from the table
+                                row.remove();
+                            }
+                            else
+                            {
+                                alert('Error: ' + response.message);
+                                console.log('Error:', response.message);
+                            }
+                        },
+
+                        // Error
+                        error: function(response){
+                            console.log('Error:', response.message);
+                            alert('An error occurred. Please try again.');
+                        }
+                    });
+                }
             });
-    });
+    
+    
+        });
 
 
 
