@@ -15,11 +15,6 @@
         'message' => 'Invalid request'
     ];
     if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-        // $response = [
-        //     'status' => 'success', 
-        //     'message' => 'Info Updated Successfully!', 
-        //     'empty_fields' => []
-        // ];
 
         $id = isset($_POST['category_id']) ? intval($_POST['category_id']) : 0;
         $name = isset($_POST['category_name']) ? trim($_POST['category_name']) : '';
