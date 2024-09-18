@@ -232,6 +232,46 @@
     }
 
     /**
+     * A function for inserting user details
+     * @param string $job
+     * @param string $facebook facebook link
+     * @param string $instagram instagram link
+     * @param string $twetter twetter link
+     * @param string $github github link
+     * 
+     * @return bool
+     */
+    function insertUserDetails($job, $facebook, $instagram, $twetter, $github){
+        global $pdo;
+
+        // Base query
+        $sql = "INSERT INTO user_details (job, facebook, instagram, twetter, github)
+                VALUES 
+                        (
+                            :job,
+                            :facebook,
+                            :instagram,
+                            :twetter,
+                            :github
+                        )
+        ";
+
+        // Preparing
+        $stmt = $pdo->prepare($sql);
+
+        // Binding
+        $stmt->bindParam(':job', $job,PDO::PARAM_STR);
+        $stmt->bindParam(':facebook', $facebook,PDO::PARAM_STR);
+        $stmt->bindParam(':instagram', $instagram,PDO::PARAM_STR);
+        $stmt->bindParam(':twetter', $twetter,PDO::PARAM_STR);
+        $stmt->bindParam(':github', $github,PDO::PARAM_STR);
+
+        // Execute and return
+        return $stmt -> execute();
+
+    }
+
+    /**
      * A function to get a user details (additional info)
      * @param int $userId
      * @return array
