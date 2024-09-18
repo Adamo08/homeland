@@ -42,7 +42,7 @@
             
             <div class="d-flex justify-content-between">
                 <!-- Navbar Brand-->
-                <a class="navbar-brand ps-3" href="index.html">
+                <a class="navbar-brand ps-3" href="<?php echo ADMINURL?>">
                     <h3 class="font-weight-bold">Homeland</h3>
                 </a>
                 <!-- Sidebar Toggle-->
@@ -78,7 +78,7 @@
                         <div class="nav">
 
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="<?php echo ADMINURL?>">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
