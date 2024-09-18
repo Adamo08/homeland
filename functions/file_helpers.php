@@ -82,8 +82,7 @@
      * @param string $username The expected username for the file
      * @return string|false The path of the uploaded file or false on failure
      */
-    function uploadAvatar($file, $username) {
-        $uploadDir = '../assets/uploads/avatars/';
+    function uploadAvatar($file, $username, $uploadDir) {
     
         try {
             return handleFileUpload($file, $username, $uploadDir);
