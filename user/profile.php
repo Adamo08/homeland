@@ -59,9 +59,9 @@
                                 width="100"
                                 height="100"
                             >
-                            <h5 class="my-3">John Smith</h5>
+                            <h5 class="my-3"><?=$user['full_name']?></h5>
                             <p class="text-muted mb-1">
-                                <?=$userDetails['job']?>
+                                <?=@$userDetails['job']?>
                             </p>
                             <p class="text-muted mb-4">
                                 <?=$user['address']?>
