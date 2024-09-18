@@ -54,7 +54,7 @@
     }
 
     /**
-     * A function to get an admin from db 
+     * A function to get all the admins from db 
      * @param int $id
      * 
      * @return array
@@ -76,7 +76,7 @@
 
 
     /**
-     * A function to get an admin from db 
+     * A function to get an admin from db by his id
      * @param int $id
      * 
      * @return array
@@ -98,6 +98,71 @@
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * A function to get an admin from db by his username && email
+     * @param int $username
+     * @param int $email
+     * 
+     * @return array
+     */
+    function getAdminByEmailAndUsername($username, $email) {
+        global $pdo;
+
+        // Base query
+        $query = "SELECT * FROM admins WHERE username = :username OR email = :email";
+        
+        // Preparing
+        $stmt = $pdo->prepare($query);
+
+        // Binding
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        
+        // Executing
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * A function that creates new admin with the passed data
+     * @param string $full_name
+     * @param string $username
+     * @param string $email
+     * @param string $phone
+     * @param string $password
+     * @param string $avatar
+     * 
+     * @return bool
+     */
+    function createAdmin($full_name, $username, $email, $phone, $password, $avatar){
+        global $pdo;
+        // Base query
+        $query = "INSERT INTO admins (full_name, username, email, phone, password, image)
+                    VALUES
+                        (
+                            :full_name,
+                            :username,
+                            :email,
+                            :phone,
+                            :password,
+                            :avatar
+                        )
+        ";
+
+        // Preparing
+        $stmt = $pdo->prepare($query);
+
+        // Binding
+        $stmt->bindParam(':full_name', $full_name,PDO::PARAM_STR);
+        $stmt->bindParam(":username",$username,PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email,PDO::PARAM_STR);
+        $stmt->bindParam(':phone', $phone,PDO::PARAM_STR);
+        $stmt->bindParam(':password', $password,PDO::PARAM_STR);
+        $stmt->bindParam(':avatar', $avatar,PDO::PARAM_STR);
+
+        // Exectuting & Return
+        return $stmt -> execute();
+    }
 
     /**
      * A function to get an admin from db 
