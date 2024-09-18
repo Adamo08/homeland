@@ -78,7 +78,7 @@
                     // Process file upload first
                     if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
 
-                        $fileUploadResult = uploadAvatar($_FILES['avatar'], $username);
+                        $fileUploadResult = uploadAvatar($_FILES['avatar'], $username, '../assets/uploads/avatars/');
                         if ($fileUploadResult !== false) {
                             $avatarPath = $fileUploadResult; // Store the uploaded avatar's path
                             $avatar = 'avatars/'.$_FILES['avatar']['name'];
@@ -133,15 +133,6 @@
                     <h3 class="h4 text-black widget-title mb-3">Register</h3>
                     <form action="" method="POST" class="form-contact-agent" enctype="multipart/form-data">
 
-
-                        <!-- For any errors  -->
-                        <?php 
-                        
-                            // if (!empty($errors)){
-                            //     displayErrors($errors);
-                            // }
-                        
-                        ?>
 
                         <?php if (!empty($errors)): ?>
                             <div class="alert alert-danger">
