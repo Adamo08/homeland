@@ -153,7 +153,15 @@
                     options: {
                         scales: {
                             y: {
-                                beginAtZero: true
+                                beginAtZero: true,
+                                ticks: {
+                                    // Custom callback function to display only integer values
+                                    callback: function(value, index, values) {
+                                        if (Math.floor(value) === value) {
+                                            return value; // Only display integers
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -184,7 +192,15 @@
                     options: {
                         scales: {
                             y: {
-                                beginAtZero: true
+                                beginAtZero: true,
+                                ticks: {
+                                    // Custom callback function to display only integer values
+                                    callback: function(value, index, values) {
+                                        if (Math.floor(value) === value) {
+                                            return value; // Only display integers
+                                        }
+                                    }
+                                }                                
                             }
                         }
                     }
