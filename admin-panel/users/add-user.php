@@ -100,13 +100,13 @@
 
 <main>
     <section>
-            <div class="container h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-9">
 
                     <h1 class="my-4 font-weight-bold bg-primary text-white px-3 py-2 rounded-3 text-center">Add New User</h1>
 
-                    <div class="card p-4" style="border-radius: 15px;">
+                    <div class="card p-4">
 
                         <form action="" method="POST" class="form-contact-agent" enctype="multipart/form-data">
 
@@ -207,6 +207,11 @@
                                         <?php echo $errors['avatar'] ?? ''?>
                                 </div>
                             </div>
+
+                            <hr />
+                            <h1>Additional Details</h1>
+                            
+
                             <div class="form-group mt-3">
                                 <input 
                                     type="submit" 
@@ -214,13 +219,17 @@
                                     class="btn btn-primary" 
                                     value="Add user">
                             </div>
+
+
+
                         </form>
 
                     </div>
 
-                </div>
+
                 </div>
             </div>
+        </div>
     </section>
 </main>
 
