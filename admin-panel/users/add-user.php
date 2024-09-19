@@ -18,6 +18,13 @@
     $phone = sanitizeInput($_POST['phone']);
     $address = sanitizeInput($_POST['address']);
 
+    // Additional info
+    $job = sanitizeInput($_POST['job']);
+    $facebook_link = sanitizeInput($_POST['facebook_link']);
+    $instagram_link = sanitizeInput($_POST['instagram_link']);
+    $twitter_link = sanitizeInput($_POST['twitter_link']);
+    $github_link = sanitizeInput($_POST['github_link']);
+
     if (empty($full_name)){
         $errors['full_name'] = "Full name is required.";
     }
@@ -47,9 +54,29 @@
         $errors['address'] = "Address is required.";
     }
 
+
+
     if (!isset($_FILES['avatar'])){
         $errors['avatar'] = "Avatar is required";
     }
+
+    // Additional info validation
+    if (empty($job)){
+        $errors['job'] = "Job is required.";
+    }
+    if (empty($facebook_link)){
+        $errors['facebook'] = "Facebook link is required.";
+    }
+    if (empty($instagram_link)){
+        $errors['instagram'] = "Instagram link is required.";
+    }
+    if (empty($twitter_link)){
+        $errors['twitter'] = "Twitter link is required.";
+    }
+    if (empty($github_link)){
+        $errors['github'] = "Github link is required.";
+    }
+
 
 
 
@@ -74,8 +101,19 @@
 
                     // Create a new user in the database
                     $newUser = createUser($full_name, $username, $email, $hashedPassword, $phone, $address, $avatar);
+                    
                     if ($newUser) {
-                        $success = "Usre created successfully";
+                        // Getting the id of the created user
+                        $userId = getUserIDByEmail($email);
+                        // Add the additional Info
+                        $addInfo = insertUserDetails($userId,$job, $facebook_link, $instagram_link, $twitter_link, $github_link);
+                        if($addInfo){
+                            $success = "Usre created successfully";
+                        }
+                        else{
+                            $errors['user'] = "Failed to create user.";
+                        }
+
                     } else {
                         // If user creation fails, remove the uploaded avatar
                         unlink($avatarPath); // Delete the uploaded file
@@ -200,7 +238,7 @@
                                     type="file" 
                                     id="avatar" 
                                     name="avatar" 
-                                    class="form-control <?= isset($errors['full_name']) ? 'is-invalid' : '' ?>"
+                                    class="form-control <?= isset($errors['avatar']) ? 'is-invalid' : '' ?>"
                                     accept="image/jpeg, image/png, image/webp"    
                                 >
                                 <div class="small text-danger mt-1">
@@ -209,8 +247,85 @@
                             </div>
 
                             <hr />
-                            <h1>Additional Details</h1>
-                            
+                            <h1 class="font-weight-bold mb-3">Additional info</h1>
+                            <!-- Job Input Group  -->
+                            <div class="form-group has-validation">
+                                <label for="job"><b>Job</b></label>
+                                <input 
+                                    type="text" 
+                                    id="job" 
+                                    name="job" 
+                                    class="form-control <?= isset($errors['job']) ? 'is-invalid' : '' ?>"
+                                    placeholder="Data Analyst"
+                                    value="<?=@$_POST['job']?>"
+                                >
+                                <div class="invalid-feedback">
+                                    <?php echo $errors['job'] ?? ''?>
+                                </div>
+                            </div>
+                            <!-- Facebook Input Group -->
+                            <div class="input-group mb-3 has-validation">
+                                <span class="input-group-text">facebook.com/</span>
+                                <input 
+                                    type="text"
+                                    name="facebook_link"
+                                    class="form-control <?= isset($errors['facebook']) ? 'is-invalid' : '' ?>" 
+                                    placeholder="Facebook username" 
+                                    aria-label="Facebook"
+                                    value="<?=@$_POST['facebook_link']?>"
+                                    >
+                                <div class="invalid-feedback">
+                                    <?php echo $errors['facebook'] ?? ''?>
+                                </div>
+                            </div>
+
+                            <!-- Instagram Input Group -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">instagram.com/</span>
+                                <input 
+                                    type="text"
+                                    name="instagram_link"
+                                    class="form-control <?= isset($errors['instagram']) ? 'is-invalid' : '' ?>" 
+                                    placeholder="Instagram username" 
+                                    aria-label="Instagram"
+                                    value="<?=@$_POST['instagram_link']?>"
+                                    >
+                                <div class="invalid-feedback">
+                                    <?php echo $errors['instagram'] ?? ''?>
+                                </div>
+                            </div>
+
+                            <!-- Twitter Input Group -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">twitter.com/</span>
+                                <input 
+                                    type="text"
+                                    name="twitter_link"
+                                    class="form-control <?= isset($errors['twitter']) ? 'is-invalid' : '' ?>" 
+                                    placeholder="Twitter username"
+                                    aria-label="Twitter"
+                                    value="<?=@$_POST['twitter_link']?>"
+                                    >
+                                <div class="invalid-feedback">
+                                    <?php echo $errors['twitter'] ?? ''?>
+                                </div>
+                            </div>
+
+                            <!-- GitHub Input Group -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">github.com/</span>
+                                <input 
+                                    type="text"
+                                    name="github_link"
+                                    class="form-control <?= isset($errors['github']) ? 'is-invalid' : '' ?>" 
+                                    placeholder="GitHub username" 
+                                    aria-label="GitHub"
+                                    value="<?=@$_POST['github_link']?>"
+                                    >
+                                <div class="invalid-feedback">
+                                    <?php echo $errors['github'] ?? ''?>
+                                </div>
+                            </div>
 
                             <div class="form-group mt-3">
                                 <input 
