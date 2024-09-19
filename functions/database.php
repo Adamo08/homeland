@@ -21,6 +21,22 @@
         return $user;
     }
 
+    /**
+     * A function that gets a user ID by the given email @
+     * @param string $email
+     * 
+     * @return mixed
+     */
+    function getUserIDByEmail($email) {
+        global $pdo;
+        $query = "SELECT id FROM users WHERE email = :email";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user['id'];
+    }
+
 
     /**
      * A function to get a user from the database 
@@ -233,25 +249,27 @@
 
     /**
      * A function for inserting user details
+     * @param int $user_id
      * @param string $job
      * @param string $facebook facebook link
      * @param string $instagram instagram link
-     * @param string $twetter twetter link
+     * @param string $twitter twitter link
      * @param string $github github link
      * 
      * @return bool
      */
-    function insertUserDetails($job, $facebook, $instagram, $twetter, $github){
+    function insertUserDetails($user_id, $job, $facebook, $instagram, $twitter, $github){
         global $pdo;
 
         // Base query
-        $sql = "INSERT INTO user_details (job, facebook, instagram, twetter, github)
+        $sql = "INSERT INTO user_details (user_id,job, facebook, instagram, twitter, github)
                 VALUES 
                         (
+                            :user_id,
                             :job,
                             :facebook,
                             :instagram,
-                            :twetter,
+                            :twitter,
                             :github
                         )
         ";
@@ -263,8 +281,9 @@
         $stmt->bindParam(':job', $job,PDO::PARAM_STR);
         $stmt->bindParam(':facebook', $facebook,PDO::PARAM_STR);
         $stmt->bindParam(':instagram', $instagram,PDO::PARAM_STR);
-        $stmt->bindParam(':twetter', $twetter,PDO::PARAM_STR);
+        $stmt->bindParam(':twitter', $twitter,PDO::PARAM_STR);
         $stmt->bindParam(':github', $github,PDO::PARAM_STR);
+        $stmt->bindParam(':user_id', $user_id,PDO::PARAM_INT);
 
         // Execute and return
         return $stmt -> execute();
@@ -907,6 +926,34 @@
         }
     }
 
+    /**
+     * A function to insert new categories
+     * @param string $name
+     * @param string $description
+     * 
+     * @return bool
+     */
+    function insertCategory($name, $description) {
+        global $pdo;
+        
+        try{
+            // Base query
+            $query = "INSERT INTO categories (name, description) VALUES (:name, :description)";
+            // Preparing
+            $stmt = $pdo->prepare($query);
+            // Binding
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':description', $description);
+
+            // Executing & return
+            return $stmt->execute();
+        }
+        catch(PDOException $e){
+            echo "Error: ".$e->getMessage();
+            return false;
+        }
+
+    }
 
     /**
      * Fetches all categories from the categories table.
