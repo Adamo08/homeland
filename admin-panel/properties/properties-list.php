@@ -29,10 +29,10 @@
     <main>
             <div class="container-fluid px-4">
 
-                <h1 class="mt-4">Categories</h1>
+                <h1 class="mt-4">Properties</h1>
                 <ol class="breadcrumb mb-4 d-flex justify-content-between align-items-center">
-                    <li class="breadcrumb-item active">Categories</li>
-                    <a href="add-category.php" class="btn btn-primary">Add New</a>
+                    <li class="breadcrumb-item active">Properties</li>
+                    <a href="add-property.php" class="btn btn-primary">Add New</a>
                 </ol>
                 <div class="container">
                     <table id="datatablesSimple" class="display">
