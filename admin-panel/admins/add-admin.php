@@ -61,7 +61,7 @@
                     $fileUploadResult = uploadAvatar($_FILES['avatar'],$username,'../assets/images/admins/');
                     if ($fileUploadResult !== false) {
                         $avatarPath = $fileUploadResult; // Store the uploaded avatar's path
-                        $avatar = 'images/'.$_FILES['avatar']['name'];
+                        $avatar = 'admins/'.$_FILES['avatar']['name'];
 
                         // echo $avatarPath;
     
