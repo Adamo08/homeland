@@ -1,5 +1,12 @@
 <?php require_once "C:/xampp/htdocs/Homeland/config/config.php"?>
-<?php 
+<?php
+
+
+
+    /*******************************************************/
+    /*************   Usres               *******************/
+    /*******************************************************/
+
 
 
     /**
@@ -21,188 +28,6 @@
         return $user;
     }
 
-    /**
-     * A function that gets a user ID by the given email @
-     * @param string $email
-     * 
-     * @return mixed
-     */
-    function getUserIDByEmail($email) {
-        global $pdo;
-        $query = "SELECT id FROM users WHERE email = :email";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $user['id'];
-    }
-
-
-    /**
-     * A function to get a user from the database 
-     * 
-     * @return array
-     */
-    function getUsers() {
-        global $pdo;
-        $query = "SELECT * FROM users";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    }
-
-
-    /**
-     * A function to get a user from db 
-     * @param string $email
-     * @param string $passord
-     * @return array
-     */
-    function getUserByEmailAndPassword($email, $password) {
-        global $pdo;
-        $query = "SELECT * FROM users WHERE (email = :email OR username = :email) AND password = :password";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * A function to get all the admins from db 
-     * @param int $id
-     * 
-     * @return array
-     */
-    function getAdmins() {
-        global $pdo;
-
-        // Base query
-        $query = "SELECT * FROM admins";
-        
-        // Preparing
-        $stmt = $pdo->prepare($query);
-
-
-        // Executing
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-
-    /**
-     * A function to get an admin from db by his id
-     * @param int $id
-     * 
-     * @return array
-     */
-    function getAdmin($id) {
-        global $pdo;
-
-        // Base query
-        $query = "SELECT * FROM admins WHERE id = :id";
-        
-        // Preparing
-        $stmt = $pdo->prepare($query);
-
-        // Binding
-        $stmt->bindParam(':id', $id);
-
-        // Executing
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * A function to get an admin from db by his username && email
-     * @param int $username
-     * @param int $email
-     * 
-     * @return array
-     */
-    function getAdminByEmailAndUsername($username, $email) {
-        global $pdo;
-
-        // Base query
-        $query = "SELECT * FROM admins WHERE username = :username OR email = :email";
-        
-        // Preparing
-        $stmt = $pdo->prepare($query);
-
-        // Binding
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $email);
-        
-        // Executing
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * A function that creates new admin with the passed data
-     * @param string $full_name
-     * @param string $username
-     * @param string $email
-     * @param string $phone
-     * @param string $password
-     * @param string $avatar
-     * 
-     * @return bool
-     */
-    function createAdmin($full_name, $username, $email, $phone, $password, $avatar){
-        global $pdo;
-        // Base query
-        $query = "INSERT INTO admins (full_name, username, email, phone, password, image)
-                    VALUES
-                        (
-                            :full_name,
-                            :username,
-                            :email,
-                            :phone,
-                            :password,
-                            :avatar
-                        )
-        ";
-
-        // Preparing
-        $stmt = $pdo->prepare($query);
-
-        // Binding
-        $stmt->bindParam(':full_name', $full_name,PDO::PARAM_STR);
-        $stmt->bindParam(":username",$username,PDO::PARAM_STR);
-        $stmt->bindParam(':email', $email,PDO::PARAM_STR);
-        $stmt->bindParam(':phone', $phone,PDO::PARAM_STR);
-        $stmt->bindParam(':password', $password,PDO::PARAM_STR);
-        $stmt->bindParam(':avatar', $avatar,PDO::PARAM_STR);
-
-        // Exectuting & Return
-        return $stmt -> execute();
-    }
-
-    /**
-     * A function to get an admin from db 
-     * @param string $email
-     * @param string $passord
-     * @return array
-     */
-    function getAdminByEmailAndPassword($email, $password) {
-        global $pdo;
-
-        // Base query
-        $query = "SELECT * FROM admins WHERE (email = :email) AND password = :password";
-        
-        // Preparing
-        $stmt = $pdo->prepare($query);
-
-        // Binding
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
-
-        // Executing
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
 
     /**
      * A function to create a new user 
@@ -417,6 +242,222 @@
      * @return mixed
      */
 
+
+    /**
+     * A function that gets a user ID by the given email @
+     * @param string $email
+     * 
+     * @return mixed
+     */
+    function getUserIDByEmail($email) {
+        global $pdo;
+        $query = "SELECT id FROM users WHERE email = :email";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user['id'];
+    }
+
+
+    /**
+     * A function to get a user from the database 
+     * 
+     * @return array
+     */
+    function getUsers() {
+        global $pdo;
+        $query = "SELECT * FROM users";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+
+    /**
+     * A function to get a user from db 
+     * @param string $email
+     * @param string $passord
+     * @return array
+     */
+    function getUserByEmailAndPassword($email, $password) {
+        global $pdo;
+        $query = "SELECT * FROM users WHERE (email = :email OR username = :email) AND password = :password";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $password);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+    /*******************************************************/
+    /*************   Admins               ******************/
+    /*******************************************************/
+
+
+    /**
+     * A function to get all the admins from db 
+     * @param int $id
+     * 
+     * @return array
+     */
+    function getAdmins() {
+        global $pdo;
+
+        // Base query
+        $query = "SELECT * FROM admins";
+        
+        // Preparing
+        $stmt = $pdo->prepare($query);
+
+
+        // Executing
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * A function to get an admin from db by his id
+     * @param int $id
+     * 
+     * @return array
+     */
+    function getAdmin($id) {
+        global $pdo;
+
+        // Base query
+        $query = "SELECT * FROM admins WHERE id = :id";
+        
+        // Preparing
+        $stmt = $pdo->prepare($query);
+
+        // Binding
+        $stmt->bindParam(':id', $id);
+
+        // Executing
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * A function to get an admin from db by his username && email
+     * @param int $username
+     * @param int $email
+     * 
+     * @return array
+     */
+    function getAdminByEmailAndUsername($username, $email) {
+        global $pdo;
+
+        // Base query
+        $query = "SELECT * FROM admins WHERE username = :username OR email = :email";
+        
+        // Preparing
+        $stmt = $pdo->prepare($query);
+
+        // Binding
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        
+        // Executing
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * A function that creates new admin with the passed data
+     * @param string $full_name
+     * @param string $username
+     * @param string $email
+     * @param string $phone
+     * @param string $password
+     * @param string $avatar
+     * 
+     * @return bool
+     */
+    function createAdmin($full_name, $username, $email, $phone, $password, $avatar){
+        global $pdo;
+        // Base query
+        $query = "INSERT INTO admins (full_name, username, email, phone, password, image)
+                    VALUES
+                        (
+                            :full_name,
+                            :username,
+                            :email,
+                            :phone,
+                            :password,
+                            :avatar
+                        )
+        ";
+
+        // Preparing
+        $stmt = $pdo->prepare($query);
+
+        // Binding
+        $stmt->bindParam(':full_name', $full_name,PDO::PARAM_STR);
+        $stmt->bindParam(":username",$username,PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email,PDO::PARAM_STR);
+        $stmt->bindParam(':phone', $phone,PDO::PARAM_STR);
+        $stmt->bindParam(':password', $password,PDO::PARAM_STR);
+        $stmt->bindParam(':avatar', $avatar,PDO::PARAM_STR);
+
+        // Exectuting & Return
+        return $stmt -> execute();
+    }
+
+    /**
+     * A function to get an admin from db 
+     * @param string $email
+     * @param string $passord
+     * @return array
+     */
+    function getAdminByEmailAndPassword($email, $password) {
+        global $pdo;
+
+        // Base query
+        $query = "SELECT * FROM admins WHERE (email = :email) AND password = :password";
+        
+        // Preparing
+        $stmt = $pdo->prepare($query);
+
+        // Binding
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $password);
+
+        // Executing
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * A function that return the admin username 
+     * @param int $id
+     * 
+     * @return string
+     */
+    function getAdminUsername($id) {
+        global $pdo;
+
+        // Base query
+        $query = "SELECT username FROM admins WHERE id = :id";
+
+        // Preparing
+        $stmt = $pdo->prepare($query);
+        
+        // Binding
+        $stmt->bindParam(':id', $id);
+
+        // Executing
+        $stmt->execute();
+        return $stmt->fetchColumn();
+
+    }
+
+    
+    
     function getRowCout($table){
         global $pdo;
 
@@ -438,6 +479,108 @@
         }
     }
     
+    /*******************************************************/
+    /*************   Properties          *******************/
+    /*******************************************************/
+
+
+    /**
+     * Insert a new property into the database.
+     *
+     * @param string $title The property title.
+     * @param string $description The property description.
+     * @param float $price The property price.
+     * @param string $street_address The street address.
+     * @param string $unit The unit identifier.
+     * @param string $city The city.
+     * @param string $state The state.
+     * @param string $zip_code The zip code.
+     * @param float $size_sqft The size in square feet.
+     * @param int $bedrooms Number of bedrooms.
+     * @param int $bathrooms Number of bathrooms.
+     * @param int $garage_spaces Number of garage spaces.
+     * @param float $area The area in square meters.
+     * @param int $year_built The year the property was built.
+     * @param string $features The features of the property.
+     * @param string $property_type The type of the property.
+     * @param string $property_status The status (for sale, rent, lease, etc.).
+     * @param string $image The image file path.
+     * @param int $admin_id The admin added the property.
+     * 
+     * @return bool Returns true on success, false on failure.
+     */
+    function insertProperty($title, $description, $price, $street_address, $unit, $city, $state, $zip_code, $size_sqft, $bedrooms, $bathrooms, $garage_spaces, $area, $year_built, $features, $property_type, $property_status, $image, $admin_id)
+    {
+        global $pdo; // Make sure $pdo is initialized
+        $price_sqft = $price / $size_sqft;
+
+        try {
+            $sql = "INSERT INTO properties (title, description, price, street_address, unit, city, state, zip_code, size_sqft, price_sqft, bedrooms, bathrooms, garage_spaces, area, year_built, features, property_type, property_status, image, admin_id)
+                    VALUES (:title, :description, :price, :street_address, :unit, :city, :state, :zip_code, :size_sqft, :price_sqft, :bedrooms, :bathrooms, :garage_spaces, :area, :year_built, :features, :property_type, :property_status, :image, :admin_id)";
+            if(incrementPropertyCount($property_type)){
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':title', $title);
+                $stmt->bindParam(':description', $description);
+                $stmt->bindParam(':price', $price);
+                $stmt->bindParam(':street_address', $street_address);
+                $stmt->bindParam(':unit', $unit);
+                $stmt->bindParam(':city', $city);
+                $stmt->bindParam(':state', $state);
+                $stmt->bindParam(':zip_code', $zip_code);
+                $stmt->bindParam(':size_sqft', $size_sqft);
+                $stmt->bindParam(':price_sqft', $price_sqft);
+                $stmt->bindParam(':bedrooms', $bedrooms);
+                $stmt->bindParam(':bathrooms', $bathrooms);
+                $stmt->bindParam(':garage_spaces', $garage_spaces);
+                $stmt->bindParam(':area', $area);
+                $stmt->bindParam(':year_built', $year_built);
+                $stmt->bindParam(':features', $features);
+                $stmt->bindParam(':property_type', $property_type);
+                $stmt->bindParam(':property_status', $property_status);
+                $stmt->bindParam(':image', $image);
+                $stmt->bindParam(':admin_id', $admin_id);
+
+                return $stmt->execute(); // Returns true on success, false on failure
+            }
+            else{
+                return false;
+            }
+        } catch (PDOException $e) {
+            // Log the error or display a friendly message
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * 
+     * 
+     */
+
+    function propertyExists($title) {
+        
+        global $pdo;
+    
+        // Base query
+        $sql = "SELECT COUNT(*) FROM properties WHERE title = :title";
+    
+        // Prepare the statement
+        $stmt = $pdo->prepare($sql);
+    
+        // Binding
+        $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+    
+        // Execute the statement
+        $stmt->execute();
+    
+        $count = $stmt->fetchColumn();
+    
+        return $count > 0;
+    }
+    
+
+
 
 
     /**
@@ -680,6 +823,29 @@
 
 
     /**
+     * Sorts an array of properties based on the specified field and order.
+     *
+     * @param array $properties The array of properties to sort.
+     * @param string $order The sorting order ('asc' for ascending, 'desc' for descending).
+     * 
+     * @return array The sorted array of properties.
+     */
+    // Function to sort properties by price
+    function sortProperties($properties, $order = 'asc') {
+        usort($properties, function($a, $b) use ($order) {
+            return $order === 'asc' ? $a['price'] <=> $b['price'] : $b['price'] <=> $a['price'];
+        });
+        return $properties;
+    }
+
+
+
+    /*******************************************************/
+    /*************   Favorites          ********************/
+    /*******************************************************/
+
+
+    /**
      * A function to add a property to favorites
      * @param int $userId
      * @param int $propertyId
@@ -782,6 +948,12 @@
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+
+    /*******************************************************/
+    /*************   Requests               ****************/
+    /*******************************************************/
 
 
     /**
@@ -926,6 +1098,11 @@
         }
     }
 
+    /*******************************************************/
+    /*************   Categories               ****************/
+    /*******************************************************/
+
+
     /**
      * A function to insert new categories
      * @param string $name
@@ -1035,26 +1212,34 @@
         return $stmt -> execute();
     }
 
-
-
-
-
-
     /**
-     * Sorts an array of properties based on the specified field and order.
-     *
-     * @param array $properties The array of properties to sort.
-     * @param string $order The sorting order ('asc' for ascending, 'desc' for descending).
+     * A function that increment the property_count of a given category
+     * @param string $name
      * 
-     * @return array The sorted array of properties.
+     * @return bool
      */
-    // Function to sort properties by price
-    function sortProperties($properties, $order = 'asc') {
-        usort($properties, function($a, $b) use ($order) {
-            return $order === 'asc' ? $a['price'] <=> $b['price'] : $b['price'] <=> $a['price'];
-        });
-        return $properties;
+    function  incrementPropertyCount($name){
+        global $pdo;
+        
+        // Base query
+        $sql = "UPDATE categories 
+                SET 
+                    property_count = property_count + 1
+                WHERE
+                    name = :name
+        ";
+
+        // Preparing
+        $stmt = $pdo -> prepare($sql);
+
+        // Binding
+        $stmt -> bindParam(":name", $name, PDO::PARAM_STR);
+
+        return $stmt -> execute();
     }
+
+
+
 
 
 
