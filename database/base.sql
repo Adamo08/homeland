@@ -62,7 +62,7 @@ VALUES
 
 CREATE TABLE IF NOT EXISTS properties (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL UNIQUE,
     description TEXT,
     price DECIMAL(15, 2),
     street_address VARCHAR(255),  -- Street address without unit number
