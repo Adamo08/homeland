@@ -74,7 +74,7 @@
                                         <td>
                                             <span class="<?=$bg?> <?=$text?> px-2 rounded-2 font-weight-bold"><?=$property['status']?></span>
                                         </td>
-                                        <td><?=$property['admin_id']?></td>
+                                        <td><?=getAdminUsername($property['admin_id'])?></td>
                                         <td><?=$property['created_at']?></td>
                                         <td>
                                             <a 
@@ -82,8 +82,8 @@
                                                 data-toggle="tooltip" 
                                                 data-placement="top" 
                                                 title="Delete"
-                                                class="delete-category ml-2"
-                                                data-id="<?=$category['id']?>"
+                                                class="delete-property ml-2"
+                                                data-id="<?=$property['id']?>"
                                             >
                                                 <i class="icon-trash text-danger"></i>
                                             </a>
@@ -92,12 +92,21 @@
                                                 data-toggle="tooltip" 
                                                 data-placement="top" 
                                                 title="Update"
-                                                class="edit-category ml-2"
-                                                data-id="<?=$category['id']?>"
-                                                data-category="<?=$category['name']?>"
-                                                data-description="<?=$category['description']?>"
+                                                class="edit-property ml-2"
+                                                data-id="<?=$property['id']?>"
+                                                data-property="<?=$property['title']?>"
+                                                data-description="<?=$property['description']?>"
                                             >
                                                 <i class="icon-edit text-info"></i>
+                                            </a>
+                                            <a 
+                                                href="property-gallery.php?id=<?=$property['id']?>" 
+                                                data-toggle="tooltip" 
+                                                data-placement="top" 
+                                                title="Gallery"
+                                                class="show-gallery ml-2"
+                                            >
+                                                <i class="icon-image text-info"></i>
                                             </a>
                                         </td>
                                     </tr>
