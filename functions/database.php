@@ -553,10 +553,33 @@
     }
 
     /**
-     * 
-     * 
+     * A function that's takes an id as parameter and deletes the property with the passed id
+     * @param int $id
+     * @return bool
      * 
      */
+    function deleteProperty($id){
+        global $pdo;
+
+        // Base Query
+        $sql = "DELETE FROM properties WHERE id = :id";
+
+        // Preparing & Binding
+        $stmt = $pdo -> prepare($sql);
+        $stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+
+
+
+        return $stmt -> execute();
+    }
+
+
+    /**
+     * A funcion that indicates if a property exists in the db OR not
+     * @param int $title
+     * @return bool
+     */
+
 
     function propertyExists($title) {
         
@@ -780,6 +803,39 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
+
+    /**
+     * A function that insert new images to the gallery
+     * @param int $property_id
+     * @param string $image_url
+     * 
+     * @return bool
+     */
+    function insertGalleryImage($property_id, $image_url) {
+
+        global $pdo;
+        try{
+            // Base query
+            $query = "INSERT INTO galleries (property_id, image_url) 
+                        VALUES (
+                                :property_id, 
+                                :image_url
+                                )
+            ";
+            // Prepare the statement
+            $stmt = $pdo->prepare($query);
+            // Bind the parameters
+            $stmt->bindParam(':property_id', $property_id, PDO::PARAM_INT);
+            $stmt->bindParam(':image_url', $image_url, PDO::PARAM_STR);
+
+            return $stmt -> execute();
+        }
+        catch(PDOException $e){
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
 
 
     /**
