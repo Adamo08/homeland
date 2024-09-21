@@ -94,8 +94,6 @@
                                                 title="Update"
                                                 class="edit-property ml-2"
                                                 data-id="<?=$property['id']?>"
-                                                data-property="<?=$property['title']?>"
-                                                data-description="<?=$property['description']?>"
                                             >
                                                 <i class="icon-edit text-info"></i>
                                             </a>
@@ -139,10 +137,48 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <script>
+
+
         // Initializing tooltips
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         });
+
+        // Deleting Properties
+        $(document).on('click', '.delete-property', function () {
+
+            var id = $(this).data('id');
+            var row = $(this).closest('tr');
+            if(confirm("Sure u want to delete this property?")){
+                $.ajax({
+                    url: 'delete_property.php',
+                    method: 'POST',
+                    data: {
+                        property_id: id
+                    },
+                    success: function (response) {
+                        if (response.status == 'success') {
+                            alert(response.message);
+                            console.log('Success:', response.message);
+
+                            // Deleting the corresponding row from the table
+                            row.remove();
+                        }
+                        else
+                        {
+                            alert('Error: ' + response.message);
+                            console.log('Error:', response.message);
+                        }
+
+                    },
+                    error: function () {
+                        console.log('Error:', response.message);
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            }
+        });
+
     </script>
 
 
