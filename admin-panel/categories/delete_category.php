@@ -19,7 +19,7 @@
         $id = isset($_POST['category_id']) ? intval($_POST['category_id']) : 0;
         
         if ($id > 0){
-            // Updating category
+            // Deleting category
             $deleteSuccess = deleteCategory($id);
             
             if ($deleteSuccess) {
