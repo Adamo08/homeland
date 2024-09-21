@@ -76,6 +76,15 @@
         if (!isset($_FILES['image']) || $_FILES['image']['error'] === UPLOAD_ERR_NO_FILE){
             $errors['image'] = "Image is required";
         }
+        else{
+            $image = $_FILES['image']['name'];
+            $imagePath = "C:/xampp/htdocs/HomeLand/assets/uploads/properties/images/".$image;
+            $imageTmp = $_FILES['image']['tmp_name'];
+            // Size 3MB max
+            if ($_FILES['image']['size'] > 3145728) {
+                $errors['image'] = "Image size is too large (3MB max)";
+            }
+        }
 
         // If there was no errors
         if (empty($errors)) {
@@ -86,47 +95,40 @@
             }
             else
             {
-                if ($_FILES['image']['error'] === UPLOAD_ERR_OK){
-                    $image = $_FILES['image']['name'];
-                    $imagePath = "C:/xampp/htdocs/HomeLand/assets/uploads/properties/images/".$image;
-                    $imageTmp = $_FILES['image']['tmp_name'];
+                // Moving the image to its location
+                if (move_uploaded_file($imageTmp, $imagePath)){
+                    // Inserting to the database
+                    $propertyInsert = insertProperty(
+                        $title,
+                        $description,
+                        $price,
+                        $street_address,
+                        $unit,
+                        $city,
+                        $state,
+                        $zip_code,
+                        $size_sqft,
+                        $bedrooms,
+                        $bathrooms,
+                        $garage_spaces,
+                        $area,
+                        $year_built,
+                        $features,
+                        $property_type,
+                        $property_status,
+                        $image,
+                        $_SESSION['admin_id']
+                    );
 
-                    // Moving the image to its location
-                    if (move_uploaded_file($imageTmp, $imagePath)){
-                        // Inserting to the database
-                        $propertyInsert = insertProperty(
-                            $title,
-                            $description,
-                            $price,
-                            $street_address,
-                            $unit,
-                            $city,
-                            $state,
-                            $zip_code,
-                            $size_sqft,
-                            $bedrooms,
-                            $bathrooms,
-                            $garage_spaces,
-                            $area,
-                            $year_built,
-                            $features,
-                            $property_type,
-                            $property_status,
-                            $image,
-                            $_SESSION['admin_id']
-                        );
-
-                        // If the insertion was successful
-                        if ($propertyInsert) {
-                            $success = "Property added successfully";
-                        }
-                        else{
-                            $error = "Failed to add property";
-                            // Unlink the image
-                            unlink($imagePath);
-                        }
+                    // If the insertion was successful
+                    if ($propertyInsert) {
+                        $success = "Property added successfully";
                     }
-
+                    else{
+                        $error = "Failed to add property";
+                        // Unlink the image
+                        unlink($imagePath);
+                    }
                 }
                 
             }
