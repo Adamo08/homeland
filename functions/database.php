@@ -836,6 +836,31 @@
         }
     }
 
+    /**
+     * A function that deletes gallery items
+     * @param int $gallery_id
+     * @return bool
+     */
+    function deleteGalleryPhoto($gallery_id){
+        global $pdo;
+
+        try{
+            // Base query
+            $sql = "DELETE FROM galleries WHERE id = :gallery_id";
+            // Preparing
+            $stmt = $pdo -> prepare($sql);
+            // Binding
+            $stmt -> bindParam(":gallery_id", $gallery_id, PDO::PARAM_INT);
+
+            return $stmt -> execute();
+        }
+        catch (PDOException $e){
+            echo "Error: ". $e->getMessage();
+            return false;
+        }
+        
+    }
+
 
 
     /**
@@ -1059,11 +1084,38 @@
     /**
      * 
      * A function that returns the list of requests 
+     * @return array
+     * 
+     */
+    function getAllRequests(){
+        global $pdo;
+
+        // Base query
+        $query = "SELECT r.property_id, r.created_at, p.title, p.street_address, p.status 
+                    FROM requests r
+                    INNER JOIN properties p
+                    ON
+                        r.property_id = p.id
+                    ORDER BY p.id ASC
+        ";
+
+        // Preparing the base query
+        $stmt = $pdo -> prepare($query);
+
+        // Executing
+        $stmt -> execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * 
+     * A function that returns the list of requests 
      * @param int $userId
      * @return array
      * 
      */
-    function getRequests($userId){
+    function getUserRequests($userId){
         global $pdo;
 
         // Base query
