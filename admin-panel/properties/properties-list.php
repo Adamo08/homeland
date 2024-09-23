@@ -27,7 +27,7 @@
     </style>
 
     <main>
-            <div class="container-fluid px-4">
+            <div class="container-fluid">
 
                 <h1 class="mt-4">Properties</h1>
                 <ol class="breadcrumb mb-4 d-flex justify-content-between align-items-center">
@@ -86,16 +86,6 @@
                                                 data-id="<?=$property['id']?>"
                                             >
                                                 <i class="icon-trash text-danger"></i>
-                                            </a>
-                                            <a 
-                                                href="#" 
-                                                data-toggle="tooltip" 
-                                                data-placement="top" 
-                                                title="Update"
-                                                class="edit-property ml-2"
-                                                data-id="<?=$property['id']?>"
-                                            >
-                                                <i class="icon-edit text-info"></i>
                                             </a>
                                             <a 
                                                 href="property-gallery.php?id=<?=$property['id']?>" 
