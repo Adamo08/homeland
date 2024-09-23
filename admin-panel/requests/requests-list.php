@@ -58,6 +58,7 @@
                                 <th>Name</th>
                                 <th>Street Address</th>
                                 <th>Property Status</th>
+                                <th>Request Status</th>
                                 <th>Date Requested</th>
                                 <th>Actions</th>
                             </tr>
@@ -102,6 +103,11 @@
                                         <td>
                                             <span class="<?=$className?>">
                                                 <?=$status?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="font-weight-bold px-3 py-1 bg-info rounded-2">
+                                                <?=$request['request_status']?>
                                             </span>
                                         </td>
                                         <td>
