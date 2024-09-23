@@ -5,7 +5,7 @@
     require_once "../functions/helpers.php";
     require_once "../config/config.php";
 
-
+    session_start();
     if (!isset($_SESSION['user'])){
         echo "<script> window.location.href = '".URL()."'</script>";
         exit();
