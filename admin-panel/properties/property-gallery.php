@@ -71,7 +71,10 @@
                 <!-- Gallery Item -->
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="card h-100">
-                        <a href="http://localhost/Homeland/assets/uploads/properties/galleries/<?=$gallery['image_url']?>" class="image-popup gal-item">
+                        <a 
+                            href="http://localhost/Homeland/assets/uploads/properties/galleries/<?=$gallery['image_url']?>" 
+                            class="image-popup gal-item h-100"
+                        >
                             <img 
                                 src="http://localhost/Homeland/assets/uploads/properties/galleries/<?=$gallery['image_url']?>" 
                                 class="img-fluid img-thumbnail h-100" 
@@ -82,7 +85,9 @@
                             href="#" 
                             class="delete-icon"
                             data-toggle="tooltip" 
-                            data-placement="top" 
+                            data-placement="top"
+                            data-photo-id = "<?php echo $gallery['id']?>"
+                            data-photo-name = "<?php echo $gallery['image_url']?>"
                             title="Delete"
                         >
                             <i class="fas fa-trash-alt"></i>
@@ -150,6 +155,41 @@
             type: 'image',
             gallery: {
                 enabled: true // Enables the gallery feature
+            }
+        });
+
+        $(document).on('click','.delete-icon', function(){
+            var galleryID = $(this).data('photo-id');
+            var galleryName = $(this).data('photo-name');
+            var galleryItem = $(this).parent('.card');
+            if (confirm("Are u sure u want to remove this item? ")){
+                // console.log(galleryItem);
+                
+                $.ajax({
+                    url: 'remove-gallery-image.php',
+                    method: 'POST',
+                    data: {
+                        gallery_id: galleryID,
+                        gallery_name: galleryName
+                    },
+
+                    success:function(response){
+                        if (response.status == 'success'){
+                            alert(response.message);
+                            console.log('Success:', response.message);
+                            galleryItem.parent().remove();
+                        }
+                        else{
+                            alert('Error: ' + response.message);
+                            console.log('Error:', response.message);
+                        }
+                    },
+                    error: function () {
+                        console.log('Error:', response.message);
+                        alert('An error occurred. Please try again.');
+                    }
+
+                });
             }
         });
 
