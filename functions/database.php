@@ -1091,7 +1091,7 @@
         global $pdo;
 
         // Base query
-        $query = "SELECT r.property_id, r.created_at, p.title, p.street_address, p.status 
+        $query = "SELECT r.property_id, r.status as request_status, r.created_at, p.title, p.street_address, p.status
                     FROM requests r
                     INNER JOIN properties p
                     ON
@@ -1119,7 +1119,7 @@
         global $pdo;
 
         // Base query
-        $query = "SELECT r.property_id, r.created_at, p.title, p.street_address, p.status 
+        $query = "SELECT r.property_id, r.status ,r.created_at, p.title, p.street_address
                     FROM requests r
                     INNER JOIN properties p
                     ON
