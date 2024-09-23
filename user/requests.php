@@ -56,7 +56,7 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Street Address</th>
-                                <th>Property Status</th>
+                                <th>Request Status</th>
                                 <th>Date Requested</th>
                                 <th>Remove</th>
                             </tr>
@@ -68,17 +68,19 @@
                                     <?php 
                                         $status = $request['status'];
                                         $className = '';
+
                                         switch($status){
-                                            case 'Available':
-                                                $className = 'status-available';
+                                            case 'pending':
+                                                $className = 'px-3 rounded-2 font-weight-bold bg-warning text-dark'; // Yellow background for pending
                                                 break;
-                                            case 'Sold':
-                                                $className = 'status-sold';
+                                            case 'accepted':
+                                                $className = 'px-3 rounded-2 font-weight-bold bg-success text-white'; // Green background for accepted
                                                 break;
-                                            case 'Pending':
-                                                $className = 'status-pending';
+                                            case 'rejected':
+                                                $className = 'px-3 rounded-2 font-weight-bold bg-danger text-white'; // Red background for rejected
                                                 break;
                                         }
+                                        
                                         
                                     ?>
                                     <tr id="row-<?= $request['property_id']; ?>">
