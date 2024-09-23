@@ -19,7 +19,7 @@
             $isLoggedIn = true;
 
             // Let's get The List of requests For the current user
-            $requests = getRequests($userId);
+            $requests = getUserRequests($userId);
         }
 
     
