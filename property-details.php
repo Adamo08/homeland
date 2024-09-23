@@ -205,13 +205,19 @@
                 <div class="col-12">
                   <h2 class="h4 text-black mb-3">Gallery</h2>
                 </div>
-                <?php foreach($galleries as $gallery): ?>
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <a href="<?php echo URL("assets/uploads/properties/galleries/" . htmlspecialchars($gallery['image_url'])); ?>" class="image-popup gal-item">
-                            <img src="<?php echo URL("assets/uploads/properties/galleries/" . htmlspecialchars($gallery['image_url'])); ?>" alt="Image" class="img-fluid img-thumbnail h-100">
-                        </a>
-                    </div>
-                <?php endforeach; ?>
+                <?php if(!empty($galleries)):?>
+                    <?php foreach($galleries as $gallery): ?>
+                      <div class="col-sm-6 col-md-4 col-lg-3">
+                          <a href="<?php echo URL("assets/uploads/properties/galleries/" . htmlspecialchars($gallery['image_url'])); ?>" class="image-popup gal-item">
+                              <img src="<?php echo URL("assets/uploads/properties/galleries/" . htmlspecialchars($gallery['image_url'])); ?>" alt="Image" class="img-fluid img-thumbnail h-100">
+                          </a>
+                      </div>
+                    <?php endforeach; ?>
+                <?php else:?>
+                  <div class="alert alert-warning">
+                    No galleries available for this property!
+                  </div>
+                <?php endif;?>
 
               </div>
             </div>
