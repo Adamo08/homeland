@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS properties (
     area DECIMAL(10, 2), -- Area in square meters or relevant unit
     year_built YEAR,
     features TEXT,
-    status ENUM('Available', 'Sold', 'Pending') DEFAULT 'Available',
+    status ENUM('Available', 'Sold') DEFAULT 'Available',
     property_type VARCHAR(255) NOT NULL UNIQUE,
     property_status ENUM('For Rent', 'For Sale', 'For Lease', 'For Rent or Sale', 'For Rent or Lease', 'For Sale or Lease', 'For Rent, Sale, or Lease') NOT NULL,
     image VARCHAR(255),
