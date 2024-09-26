@@ -112,7 +112,7 @@
                                             <a 
                                                 href="#" 
                                                 class="text-danger delete-btn text-decoration-none"
-                                                data-id="<?=$request['property_id']?>"
+                                                data-id="<?=$request['id']?>"
                                             >
                                                 <i class="icon-close"></i>
                                             </a>
@@ -144,6 +144,46 @@
         </div>
     </div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".delete-btn").on('click', function(){
+            // alert("Delete ben clicked");
+            var id = $(this).data('id');
+            var row = $(this).closest('tr');
+
+            if (confirm("Are you sure you want to remove this request?")){
+                $.ajax({
+                    method: 'POST',
+                    url: '../requests/remove_from_requests.php',
+                    data: {
+                        request_id: id
+                    },
+
+
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            row.remove();
+                            alert('Property removed from requests');
+                        } else {
+                            alert('Failed to remove property from requests');
+                        }
+                    },
+
+
+                    error: function(response) {
+                        console.log('Error:', response);
+                        alert('An error occurred. Please try again.');
+                    }
+
+
+                });
+            }
+        });
+    });
+</script>
 
 
 
