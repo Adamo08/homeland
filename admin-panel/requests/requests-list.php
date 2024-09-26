@@ -54,13 +54,13 @@
                         <thead>
                             <tr>
                                 <th width="10%"></th>
-                                <th>ID</th>
+                                <th>User</th>
                                 <th>Name</th>
                                 <th>Street Address</th>
                                 <th>Property Status</th>
                                 <th>Request Status</th>
                                 <th>Date Requested</th>
-                                <th>Actions</th>
+                                <th>Update</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,7 +92,7 @@
                                                 alt="Property Image" class="img-fluid">
                                         </td>
                                         <td>
-                                            <?=$request['property_id']?>
+                                            <?=$request['user_id']?>
                                         </td>
                                         <td>
                                             <?=$request['title']?>
@@ -114,19 +114,12 @@
                                             <?=$request['created_at']?>
                                         </td>
                                         <td>
-                                            <!-- Remove request  -->
-                                            <a 
-                                                href="#"
-                                                data-toggle="tooltip" 
-                                                data-placement="top" 
-                                                title="Remove" 
-                                                class="text-danger delete-btn text-decoration-none"
-                                            >
-                                                <i class="icon-close"></i>
-                                            </a>
                                             <!-- Update Request Status  -->
                                             <a 
                                                 href="#"
+                                                data-request-status="<?=$request['request_status']?>"
+                                                data-request-id="<?=$request['id']?>"
+                                                data-property-status = "<?=$request['status']?>"
                                                 data-toggle="tooltip" 
                                                 data-placement="top" 
                                                 title="Update" 
@@ -157,13 +150,116 @@
 </div>
 
 
+<!-- Modal to update request status -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update request status</h5>
+            <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form action="">
+                <!-- Request Status Input  -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                    </div>
+                    <select class="custom-select" id="requestStatus">
+                        <option value="pending">Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-save">Update</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
 </main>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-     // Initializing tooltips
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+    $(document).ready(function(){
+
+        // Initializing tooltips
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+
+        // Show modal
+        $(document).on('click','.edit-btn',function(){
+
+            $("#exampleModal").modal('show');
+
+            var requestId = $(this).data("request-id");
+            var requestStatus = $(this).data("request-status");
+            var requestPropertyStatus = $(this).data("property-status");
+
+
+
+            // console.log(requestId);
+            // console.log(requestStatus);
+
+            // Select the option with the requestStatus value
+            $("#requestStatus").val(requestStatus);
+            $("#requestStatus option[value='" + requestStatus + "']").prop('disabled', true);
+
+            // When the btn-save is clicked 
+            $(".btn-save").on('click', function(){
+                // console.log("btn-save clicked");
+                // Getting the selected option
+                var selectedStatus = $("#requestStatus").val();
+                // Send the ajax request
+                $.ajax({
+                    type: "POST",
+                    url: "update-request.php",
+                    data: {
+                        request_id: requestId,
+                        request_status: selectedStatus
+                    },
+
+                    success: function (response) {
+                        if (response.status == 'success') {
+                            alert(response.message);
+                            console.log('Success:', response.message);
+
+                            // Hiding the modal
+                            $("#exampleModal").modal('hide');
+                        }
+                        else
+                        {
+                            alert('Error: ' + response.message);
+                            console.log('Error:', response.message);
+                        }
+
+                    },
+                    error: function () {
+                        console.log('Error:', response.message);
+                        alert('An error occurred. Please try again.');
+                    }
+
+
+                });
+
+
+            });
+
+        });
+
+        // Close Modal
+        $(document).on('click','.close-modal',function(){
+            $("#exampleModal").modal('hide');
+        });
+
     });
 </script>
 
