@@ -23,6 +23,7 @@
         
         // Getting the property by ID
         $property = getPropertyByID($propertyID);
+        $propertyStatus = $property['status'];
 
         // echo "<pre>";
         // print_r($property);
@@ -274,11 +275,16 @@
                       </div>
                       <div class="form-group">
                           <?php if(!inRequests($userId,$propertyID)):?>
-                              <input 
-                                  type="submit" 
-                                  name="submit" 
-                                  class="btn btn-primary"
-                                  value="Send Request">
+                              <!-- First we check if the property is sold or not  -->
+                              <?php if($propertyStatus == 'Sold'):?>
+                                <button type="submit" class="btn btn-danger" disabled>Property is sold</button>
+                              <?php else:?>
+                                <input 
+                                    type="submit" 
+                                    name="submit" 
+                                    class="btn btn-primary"
+                                    value="Send Request">
+                              <?php endif?>
                           <?php else:?>
                             <input 
                                   type="submit" 
