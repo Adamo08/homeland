@@ -16,6 +16,7 @@
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        
         // Return data as JSON
         echo json_encode($result);
 
