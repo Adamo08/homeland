@@ -168,7 +168,6 @@
                         if (response.status === 'success') {
                             $('#row-' + propertyID).remove();
                             alert('Property removed from favorites');
-                            location.reload();
                         } else {
                             alert('Failed to remove property from favorites');
                         }
