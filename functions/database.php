@@ -601,9 +601,6 @@
     
         return $count > 0;
     }
-    
-
-
 
 
     /**
@@ -1082,6 +1079,29 @@
     }
 
     /**
+     * A function that removes a property from favorites
+     * @param int $requestId
+     * 
+     * @return bool
+     */
+    function removeFromRequests($requestId) {
+        global $pdo;
+        
+        // Base query
+        $sql = "DELETE FROM requests WHERE id = :request_id";
+        
+        // Preparing the query
+        $stmt = $pdo->prepare($sql);
+
+        // Binding Param
+        $stmt->bindParam(':request_id', $requestId, PDO::PARAM_INT);
+
+        // Executing
+        return $stmt->execute();
+    }
+
+
+    /**
      * 
      * A function that returns the list of requests 
      * @return array
@@ -1091,7 +1111,7 @@
         global $pdo;
 
         // Base query
-        $query = "SELECT r.property_id, r.status as request_status, r.created_at, p.title, p.street_address, p.status
+        $query = "SELECT r.id, r.property_id, r.user_id, r.status as request_status, r.created_at, p.title, p.street_address, p.status
                     FROM requests r
                     INNER JOIN properties p
                     ON
@@ -1119,7 +1139,7 @@
         global $pdo;
 
         // Base query
-        $query = "SELECT r.property_id, r.status ,r.created_at, p.title, p.street_address
+        $query = "SELECT r.id, r.property_id, r.status ,r.created_at, p.title, p.street_address
                     FROM requests r
                     INNER JOIN properties p
                     ON
@@ -1170,6 +1190,34 @@
         return $count > 0;
     }
 
+    /**
+     * A function that updates the status of the passed request (id)
+     * @param int $requestId
+     * @param string $newStatus
+     * 
+     * @return bool
+     */
+    function updateRequestStatus($requestId, $newStatus) {
+        global $pdo;
+
+        try{
+            // Base query
+            $sql = "UPDATE requests SET status = :status WHERE id = :id";
+            // Preparing the statement
+            $stmt = $pdo->prepare($sql);
+            // Binding params
+            $stmt->bindParam(':id', $requestId, PDO::PARAM_INT);
+            $stmt->bindParam(':status', $newStatus, PDO::PARAM_STR);
+
+            // Execute and return
+            return $stmt->execute();
+        }
+        catch(PDOException $e){
+            echo "Error updating request status: " . $e->getMessage();
+            return false;
+        }
+
+    }
 
 
 
