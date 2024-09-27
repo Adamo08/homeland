@@ -13,6 +13,7 @@
         $full_name = sanitizeInput($_POST['full_name']);
         $username = sanitizeInput($_POST['username']);
         $email = sanitizeInput($_POST['email']);
+        $address = sanitizeInput($_POST['address']);
         $phone = sanitizeInput($_POST['phone']);
         $password = sanitizeInput($_POST['password']);
 
@@ -22,6 +23,9 @@
         }
         if (empty($username)) {
             $errors['username'] = "Username is required";
+        }
+        if (empty($address)) {
+            $errors['address'] = "Address is required";
         }
         if (empty($email)) {
             $errors['email'] = "Email is required";
@@ -69,7 +73,7 @@
                         $hashedPassword = hash('sha256', $password);
     
                         // Create a new user in the database
-                        $newAdmin = createAdmin($full_name, $username, $email, $phone, $hashedPassword, $avatar);
+                        $newAdmin = createAdmin($full_name, $username, $email, $phone,$address, $hashedPassword, $avatar);
                         if ($newAdmin) {
                             $success = "Admin created successfully";
                         } else {
@@ -213,6 +217,31 @@
                                     />
                                     <div class="small text-danger mt-1">
                                         <?php echo $errors['phone'] ?? ''?>
+                                    </div>
+    
+                                </div>
+                            </div>
+
+                            <hr class="mx-n3">
+
+                            <div class="row align-items-center">
+                                <div class="col-md-3 ps-5">
+    
+                                    <label for="address" class="mb-0 font-weight-bold">Admin Address</label>
+    
+                                </div>
+                                <div class="col-md-9 pe-5">
+    
+                                    <input 
+                                        type="tel" 
+                                        id="address" 
+                                        name="address" 
+                                        class="form-control form-control-lg <?= isset($errors['address']) ? 'is-invalid' : '' ?>" 
+                                        placeholder="address" 
+                                        value= "<?=@$_POST['address']?>"
+                                    />
+                                    <div class="small text-danger mt-1">
+                                        <?php echo $errors['address'] ?? ''?>
                                     </div>
     
                                 </div>
