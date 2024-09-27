@@ -61,7 +61,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <p class="px-3">Welcome back <span class="bg-primary text-white font-weight-bold px-2 rounded-2"><?=$admin['username']?></span></p>
-                        <li><a class="dropdown-item" href="<?php echo ADMINURL?>admins/settings.php">Settings</a></li>
+                        <li><a class="dropdown-item" href="<?php echo ADMINURL?>admins/profile.php">Profile</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="<?php echo ADMINAUTH?>logout.php">Logout</a></li>
                     </ul>
@@ -82,10 +82,6 @@
                             <a class="nav-link" href="<?php echo ADMINURL?>">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
-                            </a>
-                            <a class="nav-link" href="<?php echo ADMINURL?>admins/settings.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
-                                Settings
                             </a>
 
                             <div class="sb-sidenav-menu-heading">Interface</div>
