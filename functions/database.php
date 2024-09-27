@@ -373,21 +373,23 @@
      * @param string $username
      * @param string $email
      * @param string $phone
+     * @param string $address
      * @param string $password
      * @param string $avatar
      * 
      * @return bool
      */
-    function createAdmin($full_name, $username, $email, $phone, $password, $avatar){
+    function createAdmin($full_name, $username, $email, $phone,$address, $password, $avatar){
         global $pdo;
         // Base query
-        $query = "INSERT INTO admins (full_name, username, email, phone, password, image)
+        $query = "INSERT INTO admins (full_name, username, email, phone,address, password, image)
                     VALUES
                         (
                             :full_name,
                             :username,
                             :email,
                             :phone,
+                            :address,
                             :password,
                             :avatar
                         )
@@ -401,6 +403,7 @@
         $stmt->bindParam(":username",$username,PDO::PARAM_STR);
         $stmt->bindParam(':email', $email,PDO::PARAM_STR);
         $stmt->bindParam(':phone', $phone,PDO::PARAM_STR);
+        $stmt->bindParam(':address', $address,PDO::PARAM_STR);
         $stmt->bindParam(':password', $password,PDO::PARAM_STR);
         $stmt->bindParam(':avatar', $avatar,PDO::PARAM_STR);
 
