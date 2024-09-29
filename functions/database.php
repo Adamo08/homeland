@@ -459,6 +459,55 @@
 
     }
 
+    /**
+     * A function to update admin info
+     * @param int $adminId
+     * @param string $full_name
+     * @param string $email
+     * @param string $phone
+     * @param string $address
+     * 
+     * @return bool
+     */
+    function updateAdminInfo($adminId, $full_name, $email, $phone, $address) {
+        global $pdo;
+    
+        // Start building the base query
+        $sql = "UPDATE admins SET ";
+        $params = [];
+    
+        // Check each parameter and build the query accordingly
+        if (!is_null($full_name)) {
+            $sql .= "full_name = :full_name, ";
+            $params[':full_name'] = $full_name;
+        }
+        if (!is_null($email)) {
+            $sql .= "email = :email, ";
+            $params[':email'] = $email;
+        }
+        if (!is_null($phone)) {
+            $sql .= "phone = :phone, ";
+            $params[':phone'] = $phone;
+        }
+        if (!is_null($address)) {
+            $sql .= "address = :address, ";
+            $params[':address'] = $address;
+        }
+    
+        // Remove the last comma and add the WHERE clause
+        $sql = rtrim($sql, ', ') . " WHERE id = :admin_id";
+        $params[':admin_id'] = $adminId;
+    
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            return true;
+        } catch (PDOException $e) {
+            return false; // Return false if there's an error
+        }
+    }
+    
+    
     
     
     function getRowCout($table){
